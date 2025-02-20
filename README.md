@@ -2,6 +2,8 @@
 
 An Ecommerce App in MERN Stack
 
+### POSTMAN FILE inside /postman ☺️
+
 ## Run Locally
 
 Clone the project
