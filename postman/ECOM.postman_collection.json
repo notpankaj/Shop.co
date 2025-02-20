@@ -24,9 +24,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{dev_url}}/api/v1/auth/login",
+							"raw": "{{url}}/api/v1/auth/login",
 							"host": [
-								"{{dev_url}}"
+								"{{url}}"
 							],
 							"path": [
 								"api",
@@ -53,9 +53,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{dev_url}}/api/v1/auth/register",
+							"raw": "{{url}}/api/v1/auth/register",
 							"host": [
-								"{{dev_url}}"
+								"{{url}}"
 							],
 							"path": [
 								"api",
@@ -78,9 +78,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{dev_url}}/api/v1/category",
+							"raw": "{{url}}/api/v1/category",
 							"host": [
-								"{{dev_url}}"
+								"{{url}}"
 							],
 							"path": [
 								"api",
@@ -106,9 +106,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{dev_url}}/api/v1/category",
+							"raw": "{{url}}/api/v1/category",
 							"host": [
-								"{{dev_url}}"
+								"{{url}}"
 							],
 							"path": [
 								"api",
@@ -130,9 +130,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{dev_url}}/api/v1/color",
+							"raw": "{{url}}/api/v1/color",
 							"host": [
-								"{{dev_url}}"
+								"{{url}}"
 							],
 							"path": [
 								"api",
@@ -158,9 +158,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{dev_url}}/api/v1/color",
+							"raw": "{{url}}/api/v1/color",
 							"host": [
-								"{{dev_url}}"
+								"{{url}}"
 							],
 							"path": [
 								"api",
@@ -191,9 +191,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{dev_url}}/api/v1/product/create",
+							"raw": "{{url}}/api/v1/product/create",
 							"host": [
-								"{{dev_url}}"
+								"{{url}}"
 							],
 							"path": [
 								"api",
@@ -211,9 +211,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{dev_url}}/api/v1/product",
+							"raw": "{{url}}/api/v1/product",
 							"host": [
-								"{{dev_url}}"
+								"{{url}}"
 							],
 							"path": [
 								"api",
@@ -265,9 +265,9 @@
 							]
 						},
 						"url": {
-							"raw": "{{dev_url}}/api/v1/varient/create?product=67abf081ef1f7dadd2c3fcae",
+							"raw": "{{url}}/api/v1/varient/create?product=67abf081ef1f7dadd2c3fcae",
 							"host": [
-								"{{dev_url}}"
+								"{{url}}"
 							],
 							"path": [
 								"api",
@@ -296,9 +296,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{dev_url}}/api/v1/size",
+							"raw": "{{url}}/api/v1/size",
 							"host": [
-								"{{dev_url}}"
+								"{{url}}"
 							],
 							"path": [
 								"api",
@@ -324,9 +324,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{dev_url}}/api/v1/size",
+							"raw": "{{url}}/api/v1/size",
 							"host": [
-								"{{dev_url}}"
+								"{{url}}"
 							],
 							"path": [
 								"api",
@@ -475,14 +475,15 @@
 						{
 							"key": "files",
 							"type": "file",
-							"src": "postman-cloud:///1efac31f-9952-41d0-8e80-6a35cd1e3dae"
+							"src": "postman-cloud:///1efac31f-9952-41d0-8e80-6a35cd1e3dae",
+							"disabled": true
 						}
 					]
 				},
 				"url": {
-					"raw": "{{dev_url}}/api/v1/test?files",
+					"raw": "{{url}}/api/v1/test?files",
 					"host": [
-						"{{dev_url}}"
+						"{{url}}"
 					],
 					"path": [
 						"api",
