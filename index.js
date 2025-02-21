@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const { loggerUtil } = require("./utils/logger");
 const app = express();
-const routes = require("./routes/index");
+const routes = require("./app/routes");
 const bodyParser = require("body-parser");
 const path = require("path");
 const fs = require("fs");
@@ -22,9 +22,9 @@ if (!fs.existsSync(uploadDir)) {
 routes(app);
 
 // Application configurations that use environmental variables (env)
-const config = require("./config/config");
+const config = require("./app/config/");
 
-// Loading Environment Variables
+// Loading APP Variables
 const DB_URL = config.mongo.string;
 const DB_NAME = config.mongo.database;
 const PORT = config.server.port;
