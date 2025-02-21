@@ -17,12 +17,11 @@ const ProductVariantSchema = new mongoose.Schema(
         required: true,
       },
     },
-    size: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Size",
-      },
-    ],
+    size:
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Size",
+    },
     photos: [
       {
         type: String,
