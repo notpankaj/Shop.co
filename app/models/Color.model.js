@@ -3,11 +3,11 @@ const ColorSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            required: true,
+            required: true, trim: true,
         },
         code: {
             type: String,
-            required: true,
+            required: true, trim: true,
         },
     },
     { timestamps: true }

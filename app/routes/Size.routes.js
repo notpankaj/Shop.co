@@ -1,6 +1,6 @@
 const express = require("express");
 const route = express.Router();
-const sizeController = require("../controllers/SizeController");
+const sizeController = require("../controllers/Size.controller");
 
 route.post("/", sizeController.create);
 route.get("/", sizeController.getAll);

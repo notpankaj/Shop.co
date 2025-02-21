@@ -1,7 +1,7 @@
 const express = require("express");
 const route = express.Router();
-const varientController = require("../controllers/ProductVarientController");
-const uploadMultipleImage = require("../utils/fileUploader");
+const varientController = require("../controllers/Varient.controller");
+const uploadMultipleImage = require("../utils/FileDelete.util");
 
 route.post("/create", uploadMultipleImage, varientController.create);
 

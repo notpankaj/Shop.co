@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const SizeSchema = new mongoose.Schema(
     {
         name: {
-            type: String,
+            type: String, trim: true,
             required: true,
         },
         isActive: {

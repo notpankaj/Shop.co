@@ -1,113 +1,59 @@
-const bcrypt = require("bcrypt");
-const {
-  OK,
-  INTERNAL_SERVER_ERROR,
-  BAD_REQUEST,
-  UNAUTHORIZED,
-  NOT_FOUND,
-} = require("../utils/StatusCode.util");
+const { OK, BAD_REQUEST } = require("../utils/StatusCode.util");
 
-const DressTypeModel = require("../models/DressType.model");
-const DressStyleModel = require("../models/DressStyle.model");
+const AdminService = require("../services/Admin.service");
 
 class AdminController {
+  /**
+   * Create a new Dress Type
+   */
   async createDressType(req, res) {
     try {
-      const { name } = req.body;
-      // Validation for Name
-      if (!name) {
-        return res
-          .status(INTERNAL_SERVER_ERROR)
-          .json({ success: false, message: "name is required" });
-      }
-      if (name.trim().length < 2) {
-        return res.status(INTERNAL_SERVER_ERROR).json({
-          success: false,
-          message: "name length must be at least 2 characters!",
-        });
-      }
-
-      const newDressType = new DressTypeModel({
-        name,
-      });
-      await newDressType.save();
-
-      res.status(OK).json({
-        success: true,
-        message: "New Dress Type created successfully",
-        data: newDressType,
-      });
+      const data = { body: req.body };
+      const result = await AdminService.createDressType(data);
+      res.status(OK).json(result);
     } catch (error) {
-      res.status(INTERNAL_SERVER_ERROR).json({
+      res.status(BAD_REQUEST).json({
         success: false,
-        message: "An error occurred",
-        error: error.message,
+        message: error.message,
       });
     }
   }
+
   async getAllDressType(req, res) {
     try {
-      const list = await DressTypeModel.find({});
-      res.status(OK).json({
-        success: true,
-        message: "Dress Type fetch created successfully",
-        data: list,
-      });
+      const result = await AdminService.getAllDressTypes();
+      res.status(OK).json(result);
     } catch (error) {
-      res.status(INTERNAL_SERVER_ERROR).json({
+      res.status(BAD_REQUEST).json({
         success: false,
-        message: "An error occurred",
-        error: error.message,
+        message: error.message,
       });
     }
   }
+  /**
+   * Create a new Dress Type
+   */
   async createDressStyle(req, res) {
     try {
-      const { name } = req.body;
-      // Validation for Name
-      if (!name) {
-        return res
-          .status(INTERNAL_SERVER_ERROR)
-          .json({ success: false, message: "name is required" });
-      }
-      if (name.trim().length < 2) {
-        return res.status(INTERNAL_SERVER_ERROR).json({
-          success: false,
-          message: "name length must be at least 2 characters!",
-        });
-      }
-
-      const newDressType = new DressStyleModel({
-        name,
-      });
-      await newDressType.save();
-
-      res.status(OK).json({
-        success: true,
-        message: "New Dress Style created successfully",
-        data: newDressType,
-      });
+      const data = { body: req.body };
+      const result = await AdminService.createDressStyle(data);
+      res.status(OK).json(result);
     } catch (error) {
-      res.status(INTERNAL_SERVER_ERROR).json({
+      res.status(BAD_REQUEST).json({
         success: false,
-        message: "An error occurred",
-        error: error.message,
+        message: error.message,
       });
     }
   }
+
   async getAllDressStyle(req, res) {
     try {
-      const list = await DressStyleModel.find({});
-      res.status(OK).json({
-        success: true,
-        message: "Dress Styles fetch created successfully",
-        data: list,
-      });
+      const result = await AdminService.getAllDressStyles();
+      res.status(OK).json(result);
     } catch (error) {
-      res.status(INTERNAL_SERVER_ERROR).json({
+      res.status(BAD_REQUEST).json({
         success: false,
-        message: "An error occurred",
-        error: error.message,
+        message: error.message,
       });
     }
   }
