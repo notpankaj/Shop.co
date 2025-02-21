@@ -18,7 +18,9 @@ class AdminController {
       });
     }
   }
-
+  /**
+   * Get all Dress Types
+   */
   async getAllDressType(req, res) {
     try {
       const result = await AdminService.getAllDressTypes();
@@ -31,7 +33,7 @@ class AdminController {
     }
   }
   /**
-   * Create a new Dress Type
+   * Create a new Dress Style
    */
   async createDressStyle(req, res) {
     try {
@@ -45,7 +47,9 @@ class AdminController {
       });
     }
   }
-
+  /**
+   * Get all Dress Styles
+   */
   async getAllDressStyle(req, res) {
     try {
       const result = await AdminService.getAllDressStyles();

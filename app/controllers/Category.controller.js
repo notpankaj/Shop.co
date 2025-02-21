@@ -1,46 +1,34 @@
-const { OK, INTERNAL_SERVER_ERROR } = require("../utils/StatusCode.util");
+const {
+  OK,
+  INTERNAL_SERVER_ERROR,
+  BAD_REQUEST,
+} = require("../utils/StatusCode.util");
 
-const ProductCategory = require("../models/Category.model");
+const CategoryService = require("../services/Category.service");
 
-class ProductCategoryController {
+class CategoryController {
+  /**
+   * Create a new Category
+   */
   async create(req, res) {
     try {
-      const { name, isActive } = req.body;
-
-      if (!name || !name.trim()) {
-        return res.status(400).json({ message: "Name is required" });
-      }
-
-      const newProductCategory = new ProductCategory({
-        name,
-        isActive,
-      });
-
-      await newProductCategory.save();
-      // response
-      res.status(OK).json({
-        success: true,
-        message: "Product Category Created!",
-        data: newProductCategory,
-      });
+      const result = await CategoryService.create(req);
+      res.status(OK).json(result);
     } catch (error) {
-      res.status(INTERNAL_SERVER_ERROR).json({
+      res.status(BAD_REQUEST).json({
         success: false,
-        message: "An error occurred",
-        error: error.message,
+        message: error.message,
       });
     }
   }
 
+  /**
+   * Get all Categories
+   */
   async getAll(req, res) {
     try {
-      const categories = await ProductCategory.find({});
-      // response
-      res.status(OK).json({
-        success: true,
-        message: "Product Category get Successfully!",
-        data: categories,
-      });
+      const result = await CategoryService.getAll();
+      res.status(OK).json(result);
     } catch (error) {
       res.status(INTERNAL_SERVER_ERROR).json({
         success: false,
@@ -51,4 +39,4 @@ class ProductCategoryController {
   }
 }
 
-module.exports = new ProductCategoryController();
+module.exports = new CategoryController();

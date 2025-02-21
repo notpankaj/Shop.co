@@ -1,4 +1,3 @@
-const User = require("../models/User.model");
 const fileDelete = require("../utils/FileDelete.util");
 
 const {
@@ -8,25 +7,6 @@ const {
 } = require("../utils/StatusCode.util");
 
 class GlobalController {
-  async emailCheck(req, res) {
-    try {
-      const { email } = req.query;
-      if (!email) {
-        return res
-          .status(BAD_REQUEST)
-          .json({ success: false, message: "Email is required" });
-      }
-      const user = await User.findOne({ email: email.trim() });
-      const exists = !!user;
-      res.status(OK).json({ success: true, emailExists: exists });
-    } catch (error) {
-      res.status(INTERNAL_SERVER_ERROR).json({
-        success: false,
-        message: "An error occurred",
-        error: error.message,
-      });
-    }
-  }
   async test(req, res) {
     if (!req.files || req.files.length < 1) {
       return res

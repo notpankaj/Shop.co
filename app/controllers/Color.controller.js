@@ -1,18 +1,19 @@
 const ColorModel = require("../models/Color.model");
-const { OK, INTERNAL_SERVER_ERROR } = require("../utils/StatusCode.util");
+const ColorService = require("../services/Color.service");
+const {
+  OK,
+  INTERNAL_SERVER_ERROR,
+  BAD_REQUEST,
+} = require("../utils/StatusCode.util");
 
 class ColorController {
+  /**
+   * Create a new Color
+   */
   async create(req, res) {
     try {
-      const { name, code } = req.body;
-      const newColor = new ColorModel({
-        name,
-        code,
-      });
-      await newColor.save();
-      res
-        .status(OK)
-        .json({ success: true, message: "Color Create", data: newColor });
+      const result = await ColorService.create(req);
+      res.status(OK).json(result);
     } catch (error) {
       res.status(INTERNAL_SERVER_ERROR).json({
         success: false,
@@ -21,20 +22,18 @@ class ColorController {
       });
     }
   }
+
+  /**
+   * Get all Colors
+   */
   async getAll(req, res) {
     try {
-      const list = await ColorModel.find({});
-
-      res.status(OK).json({
-        success: true,
-        message: "Color get successfuly",
-        data: list,
-      });
+      const result = await ColorService.getAll();
+      res.status(OK).json(result);
     } catch (error) {
-      res.status(INTERNAL_SERVER_ERROR).json({
+      res.status(BAD_REQUEST).json({
         success: false,
-        message: "An error occurred",
-        error: error.message,
+        message: error.message,
       });
     }
   }

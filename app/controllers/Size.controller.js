@@ -1,38 +1,32 @@
-const productSizeModel = require("../models/Size.model");
-const { OK, INTERNAL_SERVER_ERROR } = require("../utils/StatusCode.util");
+const SizeService = require("../services/Size.service");
+const { OK, BAD_REQUEST } = require("../utils/StatusCode.util");
 
 class SizeController {
+  /**
+   * Create a new Size
+   */
   async create(req, res) {
     try {
-      const { name } = req.body;
-      const newSize = new productSizeModel({
-        name,
-      });
-      await newSize.save();
-      res
-        .status(OK)
-        .json({ success: true, message: "Size Create", data: newSize });
+      const result = await SizeService.create(req);
+      res.status(OK).json(result);
     } catch (error) {
-      res.status(INTERNAL_SERVER_ERROR).json({
+      res.status(BAD_REQUEST).json({
         success: false,
-        message: "An error occurred",
-        error: error.message,
+        message: error.message,
       });
     }
   }
+  /**
+   * Get all Sizes
+   */
   async getAll(req, res) {
     try {
-      const list = await productSizeModel.find({});
-      res.status(OK).json({
-        success: true,
-        message: "Size fetch successfully!",
-        data: list,
-      });
+      const result = await SizeService.getAll();
+      res.status(OK).json(result);
     } catch (error) {
-      res.status(INTERNAL_SERVER_ERROR).json({
+      res.status(BAD_REQUEST).json({
         success: false,
-        message: "An error occurred",
-        error: error.message,
+        message: error.message,
       });
     }
   }
