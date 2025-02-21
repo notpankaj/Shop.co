@@ -1,55 +1,33 @@
-const Product = require("../models/Product.model");
-const { OK, INTERNAL_SERVER_ERROR } = require("../utils/StatusCode.util");
+const ProductService = require("../services/Product.service");
+const { OK, BAD_REQUEST } = require("../utils/StatusCode.util");
 
 class ProductController {
+  /**
+   * Create a New Product
+   */
+
   async create(req, res) {
     try {
-      const {
-        name,
-        description,
-        intendedFor,
-        category,
-        dressType,
-        dressStyle,
-      } = req.body;
-
-      const newProduct = new Product({
-        name,
-        description,
-        intendedFor,
-        category,
-        dressStyle,
-        dressType,
-      });
-
-      // response
-      await newProduct.save();
-
-      res
-        .status(OK)
-        .json({ success: true, message: "Product Create", data: newProduct });
+      const result = await ProductService.create(req);
+      res.status(OK).json(result);
     } catch (error) {
-      res.status(INTERNAL_SERVER_ERROR).json({
+      res.status(BAD_REQUEST).json({
         success: false,
-        message: "An error occurred",
-        error: error.message,
+        message: error.message,
       });
     }
   }
+  /**
+   * Get all  Products
+   */
   async getAll(req, res) {
     try {
-      const products = await Product.find({});
-
-      res.status(OK).json({
-        success: true,
-        message: "Product get Successfully",
-        data: products,
-      });
+      const result = await ProductService.getAll();
+      res.status(OK).json(result);
     } catch (error) {
-      res.status(INTERNAL_SERVER_ERROR).json({
+      res.status(BAD_REQUEST).json({
         success: false,
-        message: "An error occurred",
-        error: error.message,
+        message: error.message,
       });
     }
   }
