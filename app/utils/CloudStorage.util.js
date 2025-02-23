@@ -1,26 +1,26 @@
+const path = require("path");
+const { CLOUDNARY } = require("../config/storage.conf");
+
 const cloudinary = require("cloudinary").v2;
 
-cloudinary.v2.config({
-  cloud_name: "dyibxim0s",
-  api_key: "545187518964825",
-  api_secret: "<your_api_secret>",
+cloudinary.config({
+  cloud_name: CLOUDNARY.CLOUD_NAME,
+  api_key: CLOUDNARY.API_KEY,
+  api_secret: CLOUDNARY.API_SECRET,
   secure: true,
 });
 
-const uploadFileToCloudinary = (file) => {
+const uploadFileToCloudinary = (fileName) => {
   return new Promise((resolve, reject) => {
-    cloudinary.v2.uploader.upload(
-      "/home/my_image.jpg",
-      { upload_preset: "my_preset" },
-      (error, result) => {
-        console.log(result, error);
-        if (error) {
-          reject(error);
-        } else {
-          resolve(result);
-        }
+    const filePath = path.join(__dirname, "..", "uploads", fileName);
+    cloudinary.uploader.upload(filePath, (error, result) => {
+      console.log(result, error);
+      if (error) {
+        reject(error);
+      } else {
+        resolve(result);
       }
-    );
+    });
   });
 };
 

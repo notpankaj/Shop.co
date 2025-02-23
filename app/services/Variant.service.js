@@ -4,6 +4,7 @@ const VariantModel = require("../models/Variant.model");
 const SizeModel = require("../models/Size.model");
 const ColorModel = require("../models/Color.model");
 const fileDelete = require("../utils/FileDelete.util");
+const CloudStorage = require("../utils/CloudStorage.util");
 
 class VariantService {
   /*
@@ -63,7 +64,9 @@ class VariantService {
       }
 
       for (let img of req.files) {
-        photoPaths.push(img.filename);
+        // photoPaths.push(img.filename);
+        const res = await CloudStorage.fileUpload(img.filename);
+        photoPaths.push(res.url);
       }
 
       const newVarient = new VariantModel({
