@@ -8,6 +8,7 @@ const ColorRoutes = require("./Color.routes");
 const VarientRoutes = require("./Varient.routes");
 const SizeRoutes = require("./Size.routes");
 const AdminRoutes = require("./Admin.routes");
+const BrandRoutes = require("./Brand.routes");
 
 const routes = (app) => {
   // Test Route for API
@@ -23,6 +24,7 @@ const routes = (app) => {
   app.use("/api/v1/category", CategoryRoutes);
   app.use("/api/v1/color", ColorRoutes);
   app.use("/api/v1/size", SizeRoutes);
+  app.use("/api/v1/brand", BrandRoutes);
 
   return app;
 };

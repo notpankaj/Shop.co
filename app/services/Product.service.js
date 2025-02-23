@@ -5,8 +5,15 @@ class ProductService {
    * Create a new Product
    */
   static async create(data) {
-    const { name, description, intendedFor, category, dressType, dressStyle } =
-      data.body;
+    const {
+      name,
+      description,
+      brand,
+      intendedFor,
+      category,
+      dressType,
+      dressStyle,
+    } = data.body;
 
     const newProduct = new ProductModel({
       name,
@@ -15,6 +22,7 @@ class ProductService {
       category,
       dressStyle,
       dressType,
+      brand,
     });
 
     await newProduct.save();
@@ -32,6 +40,9 @@ class ProductService {
   static async getAll() {
     const list = await ProductModel.find({})
       .populate("category")
+      .populate("dressStyle")
+      .populate("dressType")
+      .populate("brand")
       .populate({
         path: "variants",
         populate: [

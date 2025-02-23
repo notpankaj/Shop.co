@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: "100mb" }));
 
-const uploadDir = path.join(__dirname, "uploads");
+const uploadDir = path.join(__dirname, "app/uploads");
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
