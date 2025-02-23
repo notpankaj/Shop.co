@@ -30,7 +30,15 @@ class ProductService {
    * Get all Products
    */
   static async getAll() {
-    const list = await ProductModel.find({});
+    const list = await ProductModel.find({})
+      .populate("category")
+      .populate({
+        path: "variants",
+        populate: [
+          { path: "color.primary", model: "Color" },
+          { path: "size", model: "Size" },
+        ],
+      });
     return {
       success: true,
       message: "Products fetched successfully",
