@@ -68,7 +68,6 @@ class AuthService {
   /**
    * User Login
    */
-
   static async login(data) {
     const { email, password } = data.body;
 
@@ -93,6 +92,9 @@ class AuthService {
     if (!user) {
       throw new Error("User not found is required");
     }
+    if (user.isDeleted) {
+      throw new Error("User Account is Not Accessable!");
+    }
     const hashedPassword = user.password;
     const isPasswordValid = await bcrypt.compare(password, hashedPassword);
     if (!isPasswordValid) {
@@ -106,6 +108,60 @@ class AuthService {
       success: true,
       message: "User login successfully",
       data: userResponse,
+    };
+  }
+  /**
+   * User Delete
+   */
+  static async userDelete(data) {
+    const { id } = data.params;
+
+    const userCheck = await UserModel.findByIdAndUpdate(
+      id,
+      { isDeleted: true },
+      { new: true }
+    );
+    if (!userCheck) {
+      throw new Error("User not Found!");
+    }
+
+    return {
+      success: true,
+      message: "User delete successfully",
+      data: userCheck,
+    };
+  }
+
+  /**
+   * User Req Forget Code
+   */
+  static async requestForgetCode(data) {
+    return {
+      success: true,
+      message: "send code to email successfully",
+      data: {},
+    };
+  }
+
+  /**
+   * Forget password
+   */
+  static async forgetPassword(data) {
+    return {
+      success: true,
+      message: "Set New Password successfully",
+      data: {},
+    };
+  }
+
+  /**
+   * Change Password
+   */
+  static async changePassword(data) {
+    return {
+      success: true,
+      message: "Change Password successfully",
+      data: {},
     };
   }
 }
