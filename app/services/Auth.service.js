@@ -158,10 +158,42 @@ class AuthService {
    * Change Password
    */
   static async changePassword(data) {
+    const userId = data.params.id;
+    const { oldPassword, newPassword } = data.body;
+
+    if (!oldPassword) {
+      throw new Error("Old Password is Require!");
+    }
+
+    if (!newPassword) {
+      throw new Error("New Password is Require!");
+    }
+    if (newPassword.length < 4) {
+      throw new Error("New Password must be 4 charater long is Require!");
+    }
+
+    const userCheck = await UserModel.findById(userId);
+
+    if (!userCheck) {
+      throw new Error("User Not Found!");
+    }
+
+    const hashedPassword = userCheck.password;
+    const isPasswordValid = await bcrypt.compare(oldPassword, hashedPassword);
+    if (!isPasswordValid) {
+      throw new Error("Old Password is Invalid");
+    }
+
+    const saltRounds = 10;
+    const newHashedPassword = await bcrypt.hash(newPassword, saltRounds);
+
+    userCheck.password = newHashedPassword;
+    await userCheck.save();
+
     return {
       success: true,
       message: "Change Password successfully",
-      data: {},
+      data: userCheck,
     };
   }
 }
