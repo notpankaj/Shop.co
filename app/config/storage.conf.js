@@ -1,0 +1,9 @@
+const KEYS = require("./keys");
+
+const CLOUDNARY = {
+  CLOUD_NAME: KEYS.CLOUDNARY_CLOUD_NAME,
+  API_KEY: KEYS.CLOUDNARY_API_KEY,
+  API_SECRET: KEYS.API_SECRET,
+};
+
+module.exports = { CLOUDNARY };
