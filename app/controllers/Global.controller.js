@@ -8,28 +8,8 @@ const {
 
 class GlobalController {
   async test(req, res) {
-    if (!req.files || req.files.length < 1) {
-      return res
-        .status(400)
-        .json({ success: false, message: "No file uploaded" });
-    }
-
-    const filenames = [];
-
-    for (let image of req.files) {
-      filenames.push(image.filename);
-    }
-
-    // remove
-    for (let image of req.files) {
-      fileDelete(image.filename);
-    }
-
-    res.json({
-      message: "File uploaded successfully",
-      data: {
-        path: filenames,
-      },
+    res.status(OK).json({
+      message: "Test successfully",
     });
   }
 }

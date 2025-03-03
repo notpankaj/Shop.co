@@ -1,8 +1,8 @@
 const express = require("express");
 const route = express.Router();
 const globalController = require("../controllers/Global.controller");
-const { uploadMultipleImage } = require("../utils/FileUploader.util");
+const AuthMiddleware = require("../middleware/Auth.middleware");
 
-route.get("/test", uploadMultipleImage, globalController.test);
+route.get("/test", AuthMiddleware, globalController.test);
 
 module.exports = route;

@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt");
 const UserModel = require("../models/User.model");
+const jwt = require('jsonwebtoken');
+const KEYS = require("../config/keys");
 
 class AuthService {
   /**
@@ -100,14 +102,20 @@ class AuthService {
     if (!isPasswordValid) {
       throw new Error("Invalid credentials");
     }
+
+
     const userResponse = { ...user._doc };
     delete userResponse.password;
     delete userResponse.__v;
 
+    const payload = { userId: userResponse._id };
+    const token = jwt.sign(payload, KEYS.JWT_SECRET, { expiresIn: '1h' });
+
+
     return {
       success: true,
       message: "User login successfully",
-      data: userResponse,
+      data: { ...userResponse, token },
     };
   }
   /**
