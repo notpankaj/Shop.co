@@ -2,13 +2,15 @@ const bcrypt = require("bcrypt");
 const UserModel = require("../models/User.model");
 const jwt = require('jsonwebtoken');
 const KEYS = require("../config/keys");
+const BrandProfileModel = require('../models/BrandProfile.model')
+const CustomerProfileModel = require('../models/CustomerProfile.model')
 
 class AuthService {
   /**
    * User Register
    */
   static async register(data) {
-    const { firstName, lastName, email, password } = data.body;
+    const { firstName, lastName, brandName, email, role = "customer", password } = data.body;
 
     // Validation for email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -24,20 +26,7 @@ class AuthService {
       throw new Error("Email already registered!");
     }
 
-    // Validation for firstName
-    if (!firstName) {
-      throw new Error("firstName is required");
-    }
-    if (firstName.trim().length < 2) {
-      throw new Error("firstName length must be at least 2 characters!");
-    }
-    // Validation for lastName
-    if (!lastName) {
-      throw new Error("lastName is required");
-    }
-    if (lastName.trim().length < 2) {
-      throw new Error("lastName length must be at least 2 characters!");
-    }
+
     // Validation for password
     if (!password) {
       throw new Error("password is required");
@@ -46,19 +35,70 @@ class AuthService {
       throw new Error("password length must be at least 4 characters!");
     }
 
+    // Role-specific validations
+    let profile;
+    if (role === "customer") {
+      // Validation for firstName
+      if (!firstName) {
+        throw new Error("First name is required for customers");
+      }
+      if (firstName.trim().length < 2) {
+        throw new Error("First name length must be at least 2 characters!");
+      }
+      // Validation for lastName
+      if (!lastName) {
+        throw new Error("Last name is required for customers");
+      }
+      if (lastName.trim().length < 2) {
+        throw new Error("Last name length must be at least 2 characters!");
+      }
+    } else if (role === "brand") {
+      // Validation for brandName
+      if (!brandName) {
+        throw new Error("Brand name is required for brands");
+      }
+      if (brandName.trim().length < 2) {
+        throw new Error("Brand name length must be at least 2 characters!");
+      }
+    } else {
+      throw new Error("Invalid role specified");
+    }
+
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
+
+    // Create User
     const newUser = new UserModel({
-      firstName,
-      lastName,
       email,
       password: hashedPassword,
+      role,
     });
-    await newUser.save();
 
-    const userResponse = { ...newUser._doc };
+    // Create profile based on role
+    if (role === "customer") {
+      profile = new CustomerProfileModel({
+        user: newUser._id,
+        firstName,
+        lastName,
+      });
+      newUser.roleModel = "CustomerProfile";
+    } else if (role === "brand") {
+      profile = new BrandProfileModel({
+        user: newUser._id,
+        brandName,
+      });
+      newUser.roleModel = "BrandProfile";
+    }
+
+    newUser.profile = profile._id;
+    await newUser.save();
+    await profile.save();
+
+    const populatedUser = await UserModel.findById(newUser._id).populate("profile");
+    const userResponse = { ...populatedUser._doc, profile: populatedUser.profile };
     delete userResponse.password;
+    delete userResponse.__v;
 
     return {
       success: true,
@@ -71,7 +111,8 @@ class AuthService {
    * User Login
    */
   static async login(data) {
-    const { email, password } = data.body;
+    const { email, password, } = data.body;
+
 
     // Validation for email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -89,7 +130,7 @@ class AuthService {
       throw new Error("password length must be at least 4 characters!");
     }
 
-    const user = await UserModel.findOne({ email });
+    const user = await UserModel.findOne({ email }).populate("profile");
 
     if (!user) {
       throw new Error("User not found is required");
@@ -104,11 +145,11 @@ class AuthService {
     }
 
 
-    const userResponse = { ...user._doc };
+    const userResponse = { ...user._doc, profile: user.profile };
     delete userResponse.password;
     delete userResponse.__v;
 
-    const payload = { userId: userResponse._id };
+    const payload = { userId: userResponse._id, role: userResponse.role };
     const token = jwt.sign(payload, KEYS.JWT_SECRET, { expiresIn: '1h' });
 
 
@@ -124,11 +165,13 @@ class AuthService {
   static async userDelete(data) {
     const { id } = data.params;
 
+
     const userCheck = await UserModel.findByIdAndUpdate(
       id,
       { isDeleted: true },
       { new: true }
-    );
+    ).populate("profile");
+
     if (!userCheck) {
       throw new Error("User not Found!");
     }
@@ -180,12 +223,14 @@ class AuthService {
       throw new Error("New Password must be 4 charater long is Require!");
     }
 
-    const userCheck = await UserModel.findById(userId);
+    const userCheck = await UserModel.findById(userId).populate("profile");
 
     if (!userCheck) {
       throw new Error("User Not Found!");
     }
-
+    if (userCheck.isDeleted) {
+      throw new Error("User account is not accessible!");
+    }
     const hashedPassword = userCheck.password;
     const isPasswordValid = await bcrypt.compare(oldPassword, hashedPassword);
     if (!isPasswordValid) {
@@ -198,9 +243,13 @@ class AuthService {
     userCheck.password = newHashedPassword;
     await userCheck.save();
 
+    const userResponse = { ...userCheck._doc, profile: userCheck.profile };
+    delete userResponse.password;
+    delete userResponse.__v;
+
     return {
       success: true,
-      message: "Change Password successfully",
+      message: "Password changed successfully",
       data: userCheck,
     };
   }
