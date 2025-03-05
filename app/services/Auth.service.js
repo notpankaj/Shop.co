@@ -324,18 +324,87 @@ class AuthService {
 
       const updatedUser = await UserModel.findById(userId).populate("profile");
 
-      console.log("ll");
-
       return {
         success: true,
-        message: "Profile updated successfully",
+        message: "Brand Profile updated successfully",
         data: updatedUser,
       };
     } catch (error) {
       throw new Error(error?.message);
     } finally {
-      fileDelete(icon.filename);
-      fileDelete(poster.filename);
+      if (icon) {
+        fileDelete(icon.filename);
+      }
+      if (poster) {
+        fileDelete(poster.filename);
+      }
+    }
+  }
+  /**
+   * Update User Profile
+   */
+  static async updateUserProfile(data) {
+    if (data?.user?._doc?.role !== "customer") {
+      throw new Error("Only Customer access this route!");
+    }
+
+    const picture = data?.files?.picture[0] || null;
+
+    try {
+      const userId = data.userId;
+      const { firstName, lastName, gender, phone } = data.body;
+
+      const customerProfile = await CustomerProfileModel.findOne({
+        user: userId,
+      });
+      if (!customerProfile) {
+        throw new Error("Customer profile not found!");
+      }
+
+      if (firstName) {
+        if (firstName.trim().length < 2) {
+          throw new Error("firstName must be at least 2 characters long!");
+        }
+        customerProfile.firstName = firstName;
+      }
+      if (lastName) {
+        if (lastName.trim().length < 2) {
+          throw new Error("lastName must be at least 2 characters long!");
+        }
+        customerProfile.lastName = lastName;
+      }
+      if (gender) {
+        customerProfile.gender = gender;
+      }
+      if (phone) {
+        const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+        if (!phoneRegex.test(phone)) {
+          throw new Error("Please enter a valid phone number!");
+        }
+        customerProfile.phone = phone;
+      }
+
+      if (picture) {
+        const res = await CloudStorage.fileUpload(picture.filename);
+        customerProfile.picture = res.url;
+        //  DELETE OLD FROM CLODNARY
+      }
+
+      await customerProfile.save();
+
+      const updatedUser = await UserModel.findById(userId).populate("profile");
+
+      return {
+        success: true,
+        message: "Customer Profile updated successfully",
+        data: updatedUser,
+      };
+    } catch (error) {
+      throw new Error(error?.message);
+    } finally {
+      if (picture) {
+        fileDelete(picture.filename);
+      }
     }
   }
 }

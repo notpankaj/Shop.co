@@ -120,6 +120,20 @@ class AuthController {
       });
     }
   }
+  /**
+   * Update User Profile
+   */
+  async updateUserProfile(req, res) {
+    try {
+      const result = await AuthService.updateUserProfile(req);
+      res.status(OK).json(result);
+    } catch (error) {
+      res.status(BAD_REQUEST).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
 }
 
 module.exports = new AuthController();

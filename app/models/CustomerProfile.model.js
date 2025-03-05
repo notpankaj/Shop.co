@@ -23,12 +23,18 @@ const customerProfileSchema = new mongoose.Schema(
       enum: ["male", "female", "unknown"],
       default: "unknown",
     },
+    picture: {
+      type: String,
+      trim: true,
+    },
     phone: { type: String, trim: true },
   },
   { timestamps: true }
 );
 
-
-const CustomerProfile = mongoose.model("CustomerProfile", customerProfileSchema);
+const CustomerProfile = mongoose.model(
+  "CustomerProfile",
+  customerProfileSchema
+);
 
 module.exports = CustomerProfile;

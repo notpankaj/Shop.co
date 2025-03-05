@@ -8,7 +8,12 @@ const BrandMiddleware = require("../middleware/Brand.middleware");
 route.post("/register", authController.register);
 route.post("/login", authController.login);
 route.get("/profile", AuthMiddleware, authController.getProfile);
-// route.put("/profile", AuthMiddleware, authController.getProfile);
+route.put(
+  "/profile",
+  AuthMiddleware,
+  fileUploader.fields([{ name: "picture", maxCount: 1 }]),
+  authController.updateUserProfile
+);
 route.put(
   "/profile/brand",
   AuthMiddleware,
