@@ -270,6 +270,46 @@ class AuthService {
       message: "Set New Password successfully",
     };
   }
+  /**
+   * Resent Forget OTP
+   */
+  static async resendForgetOtp(data) {
+    const { email } = data.body;
+
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      throw new Error("No User Found!");
+    }
+    const existingOtp = await FPotp.findOne({ uid: user._id });
+
+    if (existingOtp) {
+      // update old one
+      const otpGen = Math.floor(1000 + Math.random() * 9000).toString();
+      await MailUtils.sendForgetPasswordMail({ to: email, code: otpGen });
+      const myotp = await FPotp.findOneAndUpdate(
+        { uid: user._id },
+        { $set: { otp: otpGen } },
+        { new: true }
+      );
+      await myotp.save();
+    } else {
+      const otpGen = Math.floor(1000 + Math.random() * 9000).toString();
+      await MailUtils.sendForgetPasswordMail({ to: email, code: otpGen });
+
+      const otp = new FPotp({
+        uid: user._id,
+        otp: otpGen,
+        createdAt: new Date(),
+        expiresAt: new Date(Date.now() + 15 * 60 * 1000), // OTP expires in 15 minutes
+      });
+      await otp.save();
+    }
+    return {
+      success: true,
+      message: "Resend Otp successfully",
+      data: { userId: user?._id },
+    };
+  }
 
   /**
    * Change Password

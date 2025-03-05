@@ -77,6 +77,20 @@ class AuthController {
       });
     }
   }
+  /**
+   * Resend Forget Otp
+   */
+  async resendForgetOtp(req, res) {
+    try {
+      const result = await AuthService.resendForgetOtp(req);
+      res.status(OK).json(result);
+    } catch (error) {
+      res.status(BAD_REQUEST).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
 
   /**
    * change Password
