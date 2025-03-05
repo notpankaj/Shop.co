@@ -26,7 +26,7 @@ route.put(
 );
 route.delete("/delete", AuthMiddleware, authController.userDelete);
 route.post("/requestForgetCode", authController.requestForgetCode);
-route.put("/forgetPassord", authController.forgetPassord);
+route.post("/forgetPassword", authController.forgetPassord);
 route.put("/changePassword", AuthMiddleware, authController.changePassowrd);
 
 module.exports = route;

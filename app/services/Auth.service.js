@@ -7,6 +7,8 @@ const CustomerProfileModel = require("../models/CustomerProfile.model");
 const CloudStorage = require("../utils/CloudStorage.util");
 const fileDelete = require("../utils/FileDelete.util");
 const MailUtils = require("../utils/Mail.util");
+const FPotp = require("../models/ForgetPassword.model");
+const { OK, BAD_REQUEST } = require("../utils/StatusCode.util");
 
 class AuthService {
   /**
@@ -207,12 +209,30 @@ class AuthService {
       throw new Error("No User Found with this Email!");
     }
 
-    const code = 1234;
-    await MailUtils.sendForgetPasswordMail({ to: email, code });
+    const existingOtp = await FPotp.findOne({ uid: userCheck._id });
+    if (existingOtp) {
+      return {
+        status: OK,
+        message: "OTP already generated. Please check your email.",
+        data: { userId: userCheck?._id },
+      };
+    }
+
+    const otpGen = Math.floor(1000 + Math.random() * 9000).toString();
+    await MailUtils.sendForgetPasswordMail({ to: email, code: otpGen });
+
+    const otp = new FPotp({
+      uid: userCheck._id,
+      otp: otpGen,
+      createdAt: new Date(),
+      expiresAt: new Date(Date.now() + 15 * 60 * 1000), // OTP expires in 15 minutes
+    });
+    await otp.save();
 
     return {
       success: true,
-      message: "send code to email successfully",
+      message: "OTP sent successfully. Please check your email.",
+      data: { userId: userCheck?._id },
     };
   }
 
@@ -220,10 +240,34 @@ class AuthService {
    * Forget password
    */
   static async forgetPassword(data) {
+    const { userId, otp, newPassword } = data.body;
+
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      throw new Error("No User Found!");
+    }
+
+    const veri = await FPotp.findOne({ uid: userId, otp: otp });
+    if (!veri) {
+      throw new Error("Incorrect or Expired OTP");
+    }
+
+    if (!newPassword) {
+      throw new Error("New Password is missing!");
+    }
+    if (newPassword.trim().length < 4) {
+      throw new Error("password length must be at least 4 characters!");
+    }
+
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+
+    user.password = hashedPassword;
+    await user.save();
+    await FPotp.deleteOne({ uid: userId });
     return {
       success: true,
       message: "Set New Password successfully",
-      data: {},
     };
   }
 
