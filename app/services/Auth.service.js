@@ -6,6 +6,7 @@ const BrandProfileModel = require("../models/BrandProfile.model");
 const CustomerProfileModel = require("../models/CustomerProfile.model");
 const CloudStorage = require("../utils/CloudStorage.util");
 const fileDelete = require("../utils/FileDelete.util");
+const MailUtils = require("../utils/Mail.util");
 
 class AuthService {
   /**
@@ -194,10 +195,24 @@ class AuthService {
    * User Req Forget Code
    */
   static async requestForgetCode(data) {
+    const { email } = data.body;
+
+    if (!email) {
+      throw new Error("Email is required!");
+    }
+
+    const userCheck = await UserModel.findOne({ email });
+
+    if (!userCheck) {
+      throw new Error("No User Found with this Email!");
+    }
+
+    const code = 1234;
+    await MailUtils.sendForgetPasswordMail({ to: email, code });
+
     return {
       success: true,
       message: "send code to email successfully",
-      data: {},
     };
   }
 
