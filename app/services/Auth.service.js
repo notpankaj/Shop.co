@@ -1,16 +1,23 @@
 const bcrypt = require("bcrypt");
 const UserModel = require("../models/User.model");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const KEYS = require("../config/keys");
-const BrandProfileModel = require('../models/BrandProfile.model')
-const CustomerProfileModel = require('../models/CustomerProfile.model')
+const BrandProfileModel = require("../models/BrandProfile.model");
+const CustomerProfileModel = require("../models/CustomerProfile.model");
 
 class AuthService {
   /**
    * User Register
    */
   static async register(data) {
-    const { firstName, lastName, brandName, email, role = "customer", password } = data.body;
+    const {
+      firstName,
+      lastName,
+      brandName,
+      email,
+      role = "customer",
+      password,
+    } = data.body;
 
     // Validation for email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -25,7 +32,6 @@ class AuthService {
     if (userCheck && userCheck.email === email) {
       throw new Error("Email already registered!");
     }
-
 
     // Validation for password
     if (!password) {
@@ -67,7 +73,6 @@ class AuthService {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-
     // Create User
     const newUser = new UserModel({
       email,
@@ -95,8 +100,13 @@ class AuthService {
     await newUser.save();
     await profile.save();
 
-    const populatedUser = await UserModel.findById(newUser._id).populate("profile");
-    const userResponse = { ...populatedUser._doc, profile: populatedUser.profile };
+    const populatedUser = await UserModel.findById(newUser._id).populate(
+      "profile"
+    );
+    const userResponse = {
+      ...populatedUser._doc,
+      profile: populatedUser.profile,
+    };
     delete userResponse.password;
     delete userResponse.__v;
 
@@ -111,8 +121,7 @@ class AuthService {
    * User Login
    */
   static async login(data) {
-    const { email, password, } = data.body;
-
+    const { email, password } = data.body;
 
     // Validation for email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -144,14 +153,12 @@ class AuthService {
       throw new Error("Invalid credentials");
     }
 
-
     const userResponse = { ...user._doc, profile: user.profile };
     delete userResponse.password;
     delete userResponse.__v;
 
     const payload = { userId: userResponse._id, role: userResponse.role };
-    const token = jwt.sign(payload, KEYS.JWT_SECRET, { expiresIn: '1h' });
-
+    const token = jwt.sign(payload, KEYS.JWT_SECRET, { expiresIn: "1h" });
 
     return {
       success: true,
@@ -163,19 +170,17 @@ class AuthService {
    * User Delete
    */
   static async userDelete(data) {
-    const { id } = data.params;
-
+    const id = data.userId;
 
     const userCheck = await UserModel.findByIdAndUpdate(
       id,
       { isDeleted: true },
       { new: true }
-    ).populate("profile");
+    );
 
     if (!userCheck) {
       throw new Error("User not Found!");
     }
-
     return {
       success: true,
       message: "User delete successfully",
@@ -209,7 +214,7 @@ class AuthService {
    * Change Password
    */
   static async changePassword(data) {
-    const userId = data.params.id;
+    const userId = data.userId;
     const { oldPassword, newPassword } = data.body;
 
     if (!oldPassword) {
@@ -251,6 +256,18 @@ class AuthService {
       success: true,
       message: "Password changed successfully",
       data: userCheck,
+    };
+  }
+  /**
+   * Get Profile
+   */
+  static async getProfile(data) {
+    const userResponse = await data.user.populate("profile");
+
+    return {
+      success: true,
+      message: "Profile get successfully",
+      data: userResponse,
     };
   }
 }

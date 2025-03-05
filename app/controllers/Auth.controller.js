@@ -92,6 +92,20 @@ class AuthController {
       });
     }
   }
+  /**
+   * Get Profile
+   */
+  async getProfile(req, res) {
+    try {
+      const result = await AuthService.getProfile(req);
+      res.status(OK).json(result);
+    } catch (error) {
+      res.status(BAD_REQUEST).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
 }
 
 module.exports = new AuthController();
