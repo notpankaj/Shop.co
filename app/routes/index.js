@@ -9,6 +9,7 @@ const VarientRoutes = require("./Varient.routes");
 const SizeRoutes = require("./Size.routes");
 const AdminRoutes = require("./Admin.routes");
 const BrandRoutes = require("./Brand.routes");
+const AdminMiddleware = require("../middleware/Admin.middleware");
 
 const routes = (app) => {
   // Test Route for API
@@ -17,7 +18,7 @@ const routes = (app) => {
     res.send("Welcome to API for Passionett.\n Servers are Up and Running");
   });
   app.use("/api/v1", GlobalRoutes);
-  app.use("/api/v1/admin", AdminRoutes);
+  app.use("/api/v1/admin", AdminMiddleware, AdminRoutes);
   app.use("/api/v1/auth", AuthRoutes);
   app.use("/api/v1/product", ProductRoutes);
   app.use("/api/v1/varient", VarientRoutes);

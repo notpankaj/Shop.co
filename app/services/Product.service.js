@@ -23,6 +23,7 @@ class ProductService {
       dressStyle,
       dressType,
       brand,
+      user: data.userId,
     });
 
     await newProduct.save();
@@ -42,7 +43,7 @@ class ProductService {
       .populate("category")
       .populate("dressStyle")
       .populate("dressType")
-      .populate("brand")
+      .populate({ path: "user", populate: { path: "profile" } })
       .populate({
         path: "variants",
         populate: [

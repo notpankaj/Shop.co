@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const KEYS = require("../config/keys");
 const BrandProfileModel = require("../models/BrandProfile.model");
 const CustomerProfileModel = require("../models/CustomerProfile.model");
+const CloudStorage = require("../utils/CloudStorage.util");
+const fileDelete = require("../utils/FileDelete.util");
 
 class AuthService {
   /**
@@ -269,6 +271,72 @@ class AuthService {
       message: "Profile get successfully",
       data: userResponse,
     };
+  }
+  /**
+   * Update Brand Profile
+   */
+  static async updateBrandProfile(data) {
+    const icon = data?.files?.icon[0] || null;
+    const poster = data?.files?.poster[0] || null;
+
+    try {
+      const userId = data.userId;
+      const { phone, brandName, description } = data.body;
+
+      const brandProfile = await BrandProfileModel.findOne({ user: userId });
+      if (!brandProfile) {
+        throw new Error("Brand profile not found!");
+      }
+
+      if (brandName) {
+        if (brandName.trim().length < 2) {
+          throw new Error("Brand name must be at least 2 characters long!");
+        }
+        brandProfile.brandName = brandName;
+      }
+      if (phone) {
+        const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+        if (!phoneRegex.test(phone)) {
+          throw new Error("Please enter a valid phone number!");
+        }
+        brandProfile.phone = phone;
+      }
+      if (description) {
+        if (description.length > 500) {
+          throw new Error("Description cannot exceed 500 characters!");
+        }
+        brandProfile.description = description;
+      }
+
+      if (icon) {
+        const res = await CloudStorage.fileUpload(icon.filename);
+        brandProfile.icon = res.url;
+        //  DELETE OLD FROM CLODNARY
+      }
+
+      if (poster) {
+        const res = await CloudStorage.fileUpload(poster.filename);
+        brandProfile.poster = res.url;
+        //  DELETE OLD FROM CLODNARY
+      }
+
+      await brandProfile.save();
+
+      const updatedUser = await UserModel.findById(userId).populate("profile");
+
+      console.log("ll");
+
+      return {
+        success: true,
+        message: "Profile updated successfully",
+        data: updatedUser,
+      };
+    } catch (error) {
+      throw new Error(error?.message);
+    } finally {
+      fileDelete(icon.filename);
+      fileDelete(poster.filename);
+    }
   }
 }
 

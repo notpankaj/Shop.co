@@ -106,6 +106,20 @@ class AuthController {
       });
     }
   }
+  /**
+   * Update Brand Profile
+   */
+  async updateBrandProfile(req, res) {
+    try {
+      const result = await AuthService.updateBrandProfile(req);
+      res.status(OK).json(result);
+    } catch (error) {
+      res.status(BAD_REQUEST).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
 }
 
 module.exports = new AuthController();

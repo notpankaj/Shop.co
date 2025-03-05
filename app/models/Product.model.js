@@ -36,9 +36,9 @@ const ProductSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "DressType",
     },
-    brand: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Brand",
+      ref: "User",
       required: true,
       trim: true,
     },

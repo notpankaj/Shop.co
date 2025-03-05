@@ -12,7 +12,7 @@ class VariantService {
    */
   static async create(req) {
     try {
-      const productId = req.query?.product || undefined;
+      const productId = req.body?.productId;
       if (!productId) {
         throw new Error("Product Id is required!");
       }
