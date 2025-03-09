@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\":\"admin@gmail.com\",\n    \"password\":\"Admin@123\"\n}",
+							"raw": "{\n    \"email\":\"dev.pankaj0409@gmail.com\",\n    \"password\":\"ABCD@123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -45,7 +45,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\":\"admin\",\n    \"lastName\":\"admin\",\n    \"email\":\"admin@gmail.com\",\n    \"password\":\"Admin@123\"\n}",
+							"raw": "{\n    \"firstName\":\"ZA\",// only for customer\n    \"lastName\":\"RA\", //only for customer\n    \"brandName\":\"ZARA\", //only for brand\n    \"email\":\"admin@gmail.com\",\n    \"password\":\"admin@123\",\n    \"role\":\"customer\" // customer  brand \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -62,6 +62,290 @@
 								"v1",
 								"auth",
 								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M3YzIyMDNmMmU5ZjRkYmU5MDFhMGQiLCJyb2xlIjoiYnJhbmQiLCJpYXQiOjE3NDExNDY0NDQsImV4cCI6MTc0MTE1MDA0NH0.2ekaT5MQ38w2McUb-ro0C3Dc2Haj5j1KRypA7gBx9HA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/v1/auth/delete",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "request forget code",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"dev.pankaj0409@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/auth/requestForgetCode",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"requestForgetCode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forget password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\":\"67c7c23f3f2e9f4dbe901a14\",\n    \"otp\":7176,\n    \"newPassword\":\"Admin@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/auth/forgetPassword",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"forgetPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M3YzIyMDNmMmU5ZjRkYmU5MDFhMGQiLCJyb2xlIjoiYnJhbmQiLCJpYXQiOjE3NDExNDYzMjIsImV4cCI6MTc0MTE0OTkyMn0.3D7y1yVjAmJtTsavsxrmZCHP1Tey_GBgRTFCqksRdgY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"oldPassword\":\"Admin@1233\",\n    \"newPassword\":\"Admin@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/auth/changePassword",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"changePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M3YzIyMDNmMmU5ZjRkYmU5MDFhMGQiLCJyb2xlIjoiYnJhbmQiLCJpYXQiOjE3NDExNDU3MjEsImV4cCI6MTc0MTE0OTMyMX0.HiXgsDkOy3lbAw4PVWAByPx_TQG1aIjAE87mSOZYYrc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/v1/auth/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update brand profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M3YzIyMDNmMmU5ZjRkYmU5MDFhMGQiLCJyb2xlIjoiYnJhbmQiLCJpYXQiOjE3NDExNTAwOTIsImV4cCI6MTc0MTE1MzY5Mn0.HhTASB5V2uSAf4fHgRvtuuNHPHoRg61iGnP3AvuCOdU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "phone",
+									"value": "1234567891",
+									"type": "text"
+								},
+								{
+									"key": "brandName",
+									"value": "NEW NEW",
+									"type": "text"
+								},
+								{
+									"key": "poster",
+									"type": "file",
+									"src": "postman-cloud:///1eed5854-19f7-4540-9212-047dd39805ea"
+								},
+								{
+									"key": "icon",
+									"type": "file",
+									"src": "postman-cloud:///1eee69fc-4b5a-4050-9769-5be85b118749"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/auth//profile/brand",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"",
+								"profile",
+								"brand"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M3YzIzZjNmMmU5ZjRkYmU5MDFhMTQiLCJyb2xlIjoiY3VzdG9tZXIiLCJpYXQiOjE3NDExNTIyODksImV4cCI6MTc0MTE1NTg4OX0.ppb7aWMa9fwykTfjLfGGs7J_uwXtNH5tnD-6Q-bBIqs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "picture",
+									"type": "file",
+									"src": "postman-cloud:///1efac31f-14e2-44e0-b8f1-0b950858ec13"
+								},
+								{
+									"key": "gender",
+									"value": "male",
+									"type": "text"
+								},
+								{
+									"key": "firstName",
+									"value": "NNEWx",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "asdasdx",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "1231231234",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/auth//profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resend Forget Otp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"dev.pankaj0409@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/auth/resendForgetOtp",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"resendForgetOtp"
 							]
 						}
 					},
@@ -98,7 +382,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\":\"T-Shirt\"\n}",
+							"raw": "{\n    \"name\":\"Ad\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -180,10 +464,16 @@
 					"name": "create",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M3YzIyMDNmMmU5ZjRkYmU5MDFhMGQiLCJyb2xlIjoiYnJhbmQiLCJpYXQiOjE3NDExNDg2NjUsImV4cCI6MTc0MTE1MjI2NX0.NTJkatmFjW5cvlUfCiiOpDHlvjn06caGi6mlcazeFac",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"a\",\n    \"description\": \"descriptionasda\",\n    \"category\":\"67abef6846555e45e6ca4f83\",\n    \"intendedFor\":\"male\",\n    \"dressType\":\"67b565ca11cc2a42799867ad\",\n    \"dressStyle\":\"67b5692a980741ad81974e97\"\n    \n}",
+							"raw": "{\n    \"name\": \"a\",\n    \"description\": \"descriptionasda\",\n    \"category\":\"67abef6846555e45e6ca4f83\",\n    \"intendedFor\":\"male\",\n    \"dressType\":\"67b565ca11cc2a42799867ad\",\n    \"dressStyle\":\"67b5692a980741ad81974e97\",\n    \"brand\":\"67bb33bc4260de308d78c071\"\n    \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -233,7 +523,13 @@
 					"name": "create",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M3YzIyMDNmMmU5ZjRkYmU5MDFhMGQiLCJyb2xlIjoiYnJhbmQiLCJpYXQiOjE3NDExNDg2NjUsImV4cCI6MTc0MTE1MjI2NX0.NTJkatmFjW5cvlUfCiiOpDHlvjn06caGi6mlcazeFac",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "formdata",
 							"formdata": [
@@ -261,11 +557,16 @@
 									"key": "size",
 									"value": "67ac2c30e4940f87eb29815b",
 									"type": "text"
+								},
+								{
+									"key": "productId",
+									"value": "67c7d2b75fc7c27e22117b88",
+									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{url}}/api/v1/varient/create?product=67abf081ef1f7dadd2c3fcae",
+							"raw": "{{url}}/api/v1/varient/create",
 							"host": [
 								"{{url}}"
 							],
@@ -274,12 +575,6 @@
 								"v1",
 								"varient",
 								"create"
-							],
-							"query": [
-								{
-									"key": "product",
-									"value": "67abf081ef1f7dadd2c3fcae"
-								}
 							]
 						}
 					},
@@ -316,7 +611,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\":\"XL\"\n}",
+							"raw": "{\n    \"name\":\"XL2\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -349,7 +644,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\":\"Formal\"\n}",
+							"raw": "{\n    \"name\":\"Formal24\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -379,7 +674,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\":\"T-Shirt\"\n}",
+							"raw": "{\n    \"name\":\"T-Shirt2\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -445,6 +740,70 @@
 			]
 		},
 		{
+			"name": "Brand",
+			"item": [
+				{
+					"name": "get all brands",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/brand",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"brand"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create brand",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "abcgxx",
+									"type": "text"
+								},
+								{
+									"key": "poster",
+									"type": "file",
+									"src": "postman-cloud:///1eee69fc-4b5a-4050-9769-5be85b118749"
+								},
+								{
+									"key": "icon",
+									"type": "file",
+									"src": "postman-cloud:///1efac31f-14e2-44e0-b8f1-0b950858ec13"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/brand/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"brand",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "welcome",
 			"request": {
 				"method": "GET",
@@ -468,7 +827,13 @@
 			},
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2E2ZWZjNzZhNDM0YWZmOGU3MTc5ZWQiLCJpYXQiOjE3NDExNDc3ODQsImV4cCI6MTc0MTE1MTM4NH0.IjoctWPx5rAg75y0DMsgkvRKndmdhyZDBacO9l6WehE",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
@@ -481,7 +846,7 @@
 					]
 				},
 				"url": {
-					"raw": "{{url}}/api/v1/test?files",
+					"raw": "{{url}}/api/v1/test",
 					"host": [
 						"{{url}}"
 					],
@@ -489,12 +854,6 @@
 						"api",
 						"v1",
 						"test"
-					],
-					"query": [
-						{
-							"key": "files",
-							"value": null
-						}
 					]
 				}
 			},
