@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\":\"dev.pankaj0409@gmail.com\",\n    \"password\":\"ABCD@123\"\n}",
+							"raw": "{\n    \"email\":\"zara@gmail.com\",\n    \"password\":\"Admin@123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -45,7 +45,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\":\"ZA\",// only for customer\n    \"lastName\":\"RA\", //only for customer\n    \"brandName\":\"ZARA\", //only for brand\n    \"email\":\"admin@gmail.com\",\n    \"password\":\"admin@123\",\n    \"role\":\"customer\" // customer  brand \n}",
+							"raw": "{\n    \"firstName\":\"ZA\",// only for customer\n    \"lastName\":\"RA\", //only for customer\n    \"brandName\":\"ZARA\", //only for brand\n    \"email\":\"zara@gmail.com\",\n    \"password\":\"admin@123\",\n    \"role\":\"brand\" // customer  brand \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -467,13 +467,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M3YzIyMDNmMmU5ZjRkYmU5MDFhMGQiLCJyb2xlIjoiYnJhbmQiLCJpYXQiOjE3NDExNDg2NjUsImV4cCI6MTc0MTE1MjI2NX0.NTJkatmFjW5cvlUfCiiOpDHlvjn06caGi6mlcazeFac",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M3YzAxNTUwZTc2NTg0MWExOWIwOTIiLCJyb2xlIjoiYnJhbmQiLCJpYXQiOjE3NDMyMjg3MDcsImV4cCI6MTc0MzIzMjMwN30.-rgxKGILdx6dYN1bKmeAo8AfjLX334qIlj4W9pM6xVE",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"a\",\n    \"description\": \"descriptionasda\",\n    \"category\":\"67abef6846555e45e6ca4f83\",\n    \"intendedFor\":\"male\",\n    \"dressType\":\"67b565ca11cc2a42799867ad\",\n    \"dressStyle\":\"67b5692a980741ad81974e97\",\n    \"brand\":\"67bb33bc4260de308d78c071\"\n    \n}",
+							"raw": "{\n    \"name\": \"ZW COLLECTION PRINTED MIDI DRESS\",\n    \"description\": \"Midi dress with a lapel collar and sleeves falling below the elbow. Self-tie belt in the same fabric. Front button fastening\",\n    \"category\":\"67abef6846555e45e6ca4f83\",\n    \"intendedFor\":\"female\",\n    \"dressType\":\"67b565ca11cc2a42799867ad\",\n    \"dressStyle\":\"67b5692a980741ad81974e97\",\n    \"brand\":\"67bb33bc4260de308d78c071\"\n    \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -513,6 +513,26 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "product by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/product/67e78f44a68b36c93c6e1395",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"product",
+								"67e78f44a68b36c93c6e1395"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -526,7 +546,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M3YzIyMDNmMmU5ZjRkYmU5MDFhMGQiLCJyb2xlIjoiYnJhbmQiLCJpYXQiOjE3NDExNDg2NjUsImV4cCI6MTc0MTE1MjI2NX0.NTJkatmFjW5cvlUfCiiOpDHlvjn06caGi6mlcazeFac",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M3YzAxNTUwZTc2NTg0MWExOWIwOTIiLCJyb2xlIjoiYnJhbmQiLCJpYXQiOjE3NDMyMjg3MDcsImV4cCI6MTc0MzIzMjMwN30.-rgxKGILdx6dYN1bKmeAo8AfjLX334qIlj4W9pM6xVE",
 								"type": "text"
 							}
 						],
@@ -535,13 +555,8 @@
 							"formdata": [
 								{
 									"key": "price",
-									"value": "12312",
+									"value": "888",
 									"type": "text"
-								},
-								{
-									"key": "files",
-									"type": "file",
-									"src": "postman-cloud:///1efac31f-9952-41d0-8e80-6a35cd1e3dae"
 								},
 								{
 									"key": "color[primary]",
@@ -554,13 +569,27 @@
 									"type": "text"
 								},
 								{
+									"key": "files",
+									"type": "file",
+									"src": [
+										"/Users/pankaj/Downloads/02183001620-a2.jpg",
+										"/Users/pankaj/Downloads/02183001620-e1.jpg",
+										"/Users/pankaj/Downloads/02183001620-p.jpg"
+									]
+								},
+								{
+									"key": "productId",
+									"value": "67e78f44a68b36c93c6e1395",
+									"type": "text"
+								},
+								{
 									"key": "size",
 									"value": "67ac2c30e4940f87eb29815b",
 									"type": "text"
 								},
 								{
-									"key": "productId",
-									"value": "67c7d2b75fc7c27e22117b88",
+									"key": "size",
+									"value": "67ac2c37e4940f87eb29815d",
 									"type": "text"
 								}
 							]
@@ -608,10 +637,16 @@
 					"name": "create",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M3YzAxNTUwZTc2NTg0MWExOWIwOTIiLCJyb2xlIjoiYnJhbmQiLCJpYXQiOjE3NDMyMjg3MDcsImV4cCI6MTc0MzIzMjMwN30.-rgxKGILdx6dYN1bKmeAo8AfjLX334qIlj4W9pM6xVE",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\":\"XL2\"\n}",
+							"raw": "{\n    \"name\":\"Small\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
