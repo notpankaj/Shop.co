@@ -46,15 +46,18 @@ class VariantService {
         throw new Error("Secondary Color is Required!");
       }
       // check for size
-      if (!size) {
-        throw new Error("Size is Required!");
-      }
-      if (!mongoose.isValidObjectId(size)) {
-        throw new Error("Invalid Size ID!");
-      }
-      const sizeCheck = await SizeModel.findById(size);
-      if (!sizeCheck) {
-        throw new Error("Size not found!");
+
+      let sizesArr;
+      if (Array.isArray(size)) {
+        if (!size.length) {
+          throw new Error("Size is Required!");
+        }
+        sizesArr = size;
+      } else {
+        if (!size) {
+          throw new Error("Size is Required!");
+        }
+        sizesArr = [size];
       }
 
       // IMAGE HANDLING
@@ -76,7 +79,7 @@ class VariantService {
           secondary: color["secondary"],
         },
         price: price,
-        size: sizeCheck,
+        size: sizesArr,
       });
 
       await newVarient.save();
