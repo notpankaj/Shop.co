@@ -31,6 +31,20 @@ class ProductController {
       });
     }
   }
+  /**
+   * Get Product By ID
+   */
+  async getProductById(req, res) {
+    try {
+      const result = await ProductService.getProductById(req);
+      res.status(OK).json(result);
+    } catch (error) {
+      res.status(BAD_REQUEST).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
 }
 
 module.exports = new ProductController();

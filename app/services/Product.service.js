@@ -57,6 +57,29 @@ class ProductService {
       data: list,
     };
   }
+  /**
+   * Get Product By ID
+   */
+  static async getProductById(data) {
+    const { id } = data.params;
+    const list = await ProductModel.findById(id)
+      .populate("category")
+      .populate("dressStyle")
+      .populate("dressType")
+      .populate({ path: "user", populate: { path: "profile" } })
+      .populate({
+        path: "variants",
+        populate: [
+          { path: "color.primary", model: "Color" },
+          { path: "size", model: "Size" },
+        ],
+      });
+    return {
+      success: true,
+      message: "Products fetched successfully",
+      data: list,
+    };
+  }
 }
 
 module.exports = ProductService;
