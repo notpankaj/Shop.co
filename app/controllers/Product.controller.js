@@ -22,7 +22,7 @@ class ProductController {
    */
   async getAll(req, res) {
     try {
-      const result = await ProductService.getAll();
+      const result = await ProductService.getAll(req);
       res.status(OK).json(result);
     } catch (error) {
       res.status(BAD_REQUEST).json({
