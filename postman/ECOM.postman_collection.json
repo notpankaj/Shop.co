@@ -509,6 +509,112 @@
 								"api",
 								"v1",
 								"product"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "67ac2c30e4940f87eb29815b",
+									"disabled": true
+								},
+								{
+									"key": "category",
+									"value": "67abef6846555e45e6ca4f83",
+									"disabled": true
+								},
+								{
+									"key": "dressStyle",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "intendedFor",
+									"value": "female",
+									"disabled": true
+								},
+								{
+									"key": "color",
+									"value": "67abfd40235412a734e3f39a",
+									"description": "primary color id",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "a",
+									"description": "product name",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "ceeatedAt",
+									"description": "any field name",
+									"disabled": true
+								},
+								{
+									"key": "sortOrder",
+									"value": "asc",
+									"description": "asc , desc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/product?color=60a1b2c3d4e5f8",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"product"
+							],
+							"query": [
+								{
+									"key": "color",
+									"value": "60a1b2c3d4e5f8"
+								},
+								{
+									"key": "category",
+									"value": "60a1b2c3d4e5f9",
+									"disabled": true
+								},
+								{
+									"key": "minPrice",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "maxPrice",
+									"value": "100",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "67ac2c30e4940f87eb29815b,67ac2c37e4940f87eb29815d",
+									"disabled": true
+								},
+								{
+									"key": "intendedFor",
+									"value": "female",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -546,7 +652,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M3YzAxNTUwZTc2NTg0MWExOWIwOTIiLCJyb2xlIjoiYnJhbmQiLCJpYXQiOjE3NDMyMjg3MDcsImV4cCI6MTc0MzIzMjMwN30.-rgxKGILdx6dYN1bKmeAo8AfjLX334qIlj4W9pM6xVE",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M3YzAxNTUwZTc2NTg0MWExOWIwOTIiLCJyb2xlIjoiYnJhbmQiLCJpYXQiOjE3NDMyMzI2NDIsImV4cCI6MTc0MzIzNjI0Mn0.bIHo9x1ikn-tKrLY2gZS_XGrnvvsEELEzORPV8DE8Sw",
 								"type": "text"
 							}
 						],
@@ -555,27 +661,18 @@
 							"formdata": [
 								{
 									"key": "price",
-									"value": "888",
+									"value": "1111",
 									"type": "text"
 								},
 								{
 									"key": "color[primary]",
-									"value": "67abfd40235412a734e3f39a",
+									"value": "67b86191c10d2a5b73ef7804",
 									"type": "text"
 								},
 								{
 									"key": "color[secondary]",
-									"value": "tomato",
+									"value": "#388a5c",
 									"type": "text"
-								},
-								{
-									"key": "files",
-									"type": "file",
-									"src": [
-										"/Users/pankaj/Downloads/02183001620-a2.jpg",
-										"/Users/pankaj/Downloads/02183001620-e1.jpg",
-										"/Users/pankaj/Downloads/02183001620-p.jpg"
-									]
 								},
 								{
 									"key": "productId",
@@ -591,6 +688,25 @@
 									"key": "size",
 									"value": "67ac2c37e4940f87eb29815d",
 									"type": "text"
+								},
+								{
+									"key": "size",
+									"value": "67e79db9ed4e40906cb7a0c2",
+									"type": "text"
+								},
+								{
+									"key": "size",
+									"value": "67b8642157207d72a2c31f66",
+									"type": "text"
+								},
+								{
+									"key": "files",
+									"type": "file",
+									"src": [
+										"/Users/pankaj/Downloads/02183005500-a1.jpg",
+										"/Users/pankaj/Downloads/02183005500-e1.jpg",
+										"/Users/pankaj/Downloads/02183005500-p.jpg"
+									]
 								}
 							]
 						},
@@ -640,7 +756,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M3YzAxNTUwZTc2NTg0MWExOWIwOTIiLCJyb2xlIjoiYnJhbmQiLCJpYXQiOjE3NDMyMjg3MDcsImV4cCI6MTc0MzIzMjMwN30.-rgxKGILdx6dYN1bKmeAo8AfjLX334qIlj4W9pM6xVE",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2E2ZWZjNzZhNDM0YWZmOGU3MTc5ZWQiLCJpYXQiOjE3NDMyMzI0MjYsImV4cCI6MTc0MzIzNjAyNn0.KrSzAbDCbc1betGndqCWPDjcMiYN01ylinkN8l7CIno",
 								"type": "text"
 							}
 						],
