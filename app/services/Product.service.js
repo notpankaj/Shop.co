@@ -40,64 +40,49 @@ class ProductService {
   /**
    * Get all Products
    */
-  // static async getAll(req) {
-  //   const { size } = req.query;
-
-  //   // First find all product variants that have the specified size
-  //   const matchingVariants = size
-  //     ? await ProductVariant.find({
-  //         size: new mongoose.Types.ObjectId(size),
-  //       }).distinct("_id")
-  //     : null;
-
-  //   // Build the product query
-  //   let productQuery = ProductModel.find()
-  //     .populate("category")
-  //     .populate("dressStyle")
-  //     .populate("dressType")
-  //     .populate({ path: "user", populate: { path: "profile" } })
-  //     .populate({
-  //       path: "variants",
-  //       populate: [
-  //         { path: "color.primary", model: "Color" },
-  //         { path: "size", model: "Size" },
-  //       ],
-  //     });
-
-  //   // Add size filter if needed
-  //   if (matchingVariants) {
-  //     productQuery = productQuery.where({
-  //       variants: { $in: matchingVariants },
-  //     });
-  //   }
-
-  //   const products = await productQuery.exec();
-
-  //   // Filter variants if size filter was applied
-  //   const result = size
-  //     ? products.map((p) => ({
-  //         ...p.toObject(),
-  //         variants: p.variants.filter((v) =>
-  //           v.size.some((s) => s._id.equals(size))
-  //         ),
-  //       }))
-  //     : products;
-
-  //   return {
-  //     success: true,
-  //     message: "Products fetched successfully",
-  //     data: result,
-  //   };
-  // }
   static async getAll(req) {
-    const { size } = req.query;
+    const {
+      size,
+      color,
+      category,
+      dressStyle,
+      dressType,
+      intendedFor,
+      search, // New search parameter
+      page = 1,
+      limit = 10,
+      sortBy = "createdAt",
+      sortOrder = "desc",
+    } = req.query;
 
-    // First find all product variants that have the specified size
-    const matchingVariants = size
-      ? await ProductVariant.find({
-          size: new mongoose.Types.ObjectId(size),
-        }).distinct("_id")
-      : null;
+    // Validate pagination params
+    const pageNumber = parseInt(page);
+    const limitNumber = parseInt(limit);
+    if (isNaN(pageNumber) || pageNumber < 1)
+      throw new Error("Invalid page number");
+    if (isNaN(limitNumber) || limitNumber < 1) throw new Error("Invalid limit");
+
+    // Validate sort params
+    const validSortFields = ["createdAt", "name", "price"];
+    const sortDirection = sortOrder === "asc" ? 1 : -1;
+    if (!validSortFields.includes(sortBy))
+      throw new Error("Invalid sort field");
+
+    // First find all product variants that match the variant-level filters (size, color)
+    const variantFilters = {};
+
+    if (size) {
+      variantFilters.size = new mongoose.Types.ObjectId(size);
+    }
+
+    if (color) {
+      variantFilters["color.primary"] = new mongoose.Types.ObjectId(color);
+    }
+
+    const matchingVariantIds =
+      size || color
+        ? await ProductVariant.find(variantFilters).distinct("_id")
+        : null;
 
     // Build the product query
     let productQuery = ProductModel.find()
@@ -111,31 +96,86 @@ class ProductService {
           { path: "color.primary", model: "Color" },
           { path: "size", model: "Size" },
         ],
-      });
+      })
+      .sort({ [sortBy]: sortDirection })
+      .skip((pageNumber - 1) * limitNumber)
+      .limit(limitNumber);
 
-    // Add size filter if needed
-    if (matchingVariants) {
+    // Add product-level filters
+    const productFilters = {};
+
+    if (category) {
+      productFilters.category = new mongoose.Types.ObjectId(category);
+    }
+
+    if (dressStyle) {
+      productFilters.dressStyle = new mongoose.Types.ObjectId(dressStyle);
+    }
+
+    if (dressType) {
+      productFilters.dressType = new mongoose.Types.ObjectId(dressType);
+    }
+
+    if (intendedFor) {
+      productFilters.intendedFor = intendedFor;
+    }
+
+    // Add search by product name (case-insensitive)
+    if (search) {
+      productFilters.name = {
+        $regex: search,
+        $options: "i", // 'i' for case insensitive
+      };
+    }
+
+    if (Object.keys(productFilters).length > 0) {
+      productQuery = productQuery.where(productFilters);
+    }
+
+    // Add variant filter if needed
+    if (matchingVariantIds) {
       productQuery = productQuery.where({
-        variants: { $in: matchingVariants },
+        variants: { $in: matchingVariantIds },
       });
     }
 
-    const products = await productQuery.exec();
+    // Execute both queries in parallel for better performance
+    const [products, totalCount] = await Promise.all([
+      productQuery.exec(),
+      ProductModel.countDocuments(productFilters),
+    ]);
 
-    // Filter variants if size filter was applied
-    const result = size
-      ? products.map((p) => ({
-          ...p.toObject(),
-          variants: p.variants.filter((v) =>
-            v.size.some((s) => s._id.equals(size))
-          ),
-        }))
-      : products;
+    // Filter variants if variant filters were applied
+    const filteredProducts =
+      size || color
+        ? products.map((p) => ({
+            ...p.toObject(),
+            variants: p.variants.filter((v) => {
+              const sizeMatch = size
+                ? v.size.some((s) => s._id.equals(size))
+                : true;
+              const colorMatch = color
+                ? v.color.primary._id.equals(color)
+                : true;
+              return sizeMatch && colorMatch;
+            }),
+          }))
+        : products;
 
     return {
       success: true,
       message: "Products fetched successfully",
-      data: result,
+      data: {
+        products: filteredProducts,
+        pagination: {
+          total: totalCount,
+          page: pageNumber,
+          limit: limitNumber,
+          totalPages: Math.ceil(totalCount / limitNumber),
+          hasNextPage: pageNumber * limitNumber < totalCount,
+          hasPrevPage: pageNumber > 1,
+        },
+      },
     };
   }
   /**
