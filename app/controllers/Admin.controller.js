@@ -18,20 +18,7 @@ class AdminController {
       });
     }
   }
-  /**
-   * Get all Dress Types
-   */
-  async getAllDressType(req, res) {
-    try {
-      const result = await AdminService.getAllDressTypes();
-      res.status(OK).json(result);
-    } catch (error) {
-      res.status(BAD_REQUEST).json({
-        success: false,
-        message: error.message,
-      });
-    }
-  }
+
   /**
    * Create a new Dress Style
    */
@@ -39,20 +26,6 @@ class AdminController {
     try {
       const data = { body: req.body };
       const result = await AdminService.createDressStyle(data);
-      res.status(OK).json(result);
-    } catch (error) {
-      res.status(BAD_REQUEST).json({
-        success: false,
-        message: error.message,
-      });
-    }
-  }
-  /**
-   * Get all Dress Styles
-   */
-  async getAllDressStyle(req, res) {
-    try {
-      const result = await AdminService.getAllDressStyles();
       res.status(OK).json(result);
     } catch (error) {
       res.status(BAD_REQUEST).json({
