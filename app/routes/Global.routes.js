@@ -9,5 +9,6 @@ const GlobalController = require("../controllers/Global.controller");
 route.get("/test", AuthMiddleware, AdminMiddleware, globalController.test);
 route.get("/dress-style", GlobalController.getAllDressStyle);
 route.get("/dress-type", GlobalController.getAllDressType);
+route.post("/stripe-checkout", GlobalController.stripeCheckout);
 
 module.exports = route;

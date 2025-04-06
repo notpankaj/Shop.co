@@ -16,6 +16,9 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const GMAIL_SMTP_APP_EMAIL = process.env.GMAIL_SMTP_APP_EMAIL;
 const GMAIL_SMTP_APP_PASSWORD = process.env.GMAIL_SMTP_APP_PASSWORD;
 
+const STRIPE_PK = process.env.STRIPE_PK;
+const STRIPE_SK = process.env.STRIPE_SK;
+
 const KEYS = {
   MONGO_DB_URL,
   SERVER_HOSTNAME,
@@ -28,6 +31,8 @@ const KEYS = {
   JWT_SECRET,
   GMAIL_SMTP_APP_PASSWORD,
   GMAIL_SMTP_APP_EMAIL,
+  STRIPE_PK,
+  STRIPE_SK,
 };
 
 module.exports = KEYS;

@@ -37,6 +37,20 @@ class GlobalController {
       });
     }
   }
+  /**
+   * Stripe Checkout
+   */
+  async stripeCheckout(req, res) {
+    try {
+      const result = await GlobalService.stripeCheckout(req);
+      res.status(OK).json(result);
+    } catch (error) {
+      res.status(BAD_REQUEST).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
 }
 
 module.exports = new GlobalController();
