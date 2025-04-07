@@ -337,6 +337,8 @@ class ProductService {
 
     // Response with fully populated data
     return {
+      success: true,
+      message: "Products fetched successfully",
       products: products.map((product) => ({
         ...product,
         // Ensure variants.size is properly structured
