@@ -178,6 +178,179 @@ class ProductService {
       },
     };
   }
+
+  static async getAllNew(req) {
+    const {
+      size,
+      color,
+      category,
+      dressStyle,
+      dressType,
+      intendedFor,
+      search,
+      page = 1,
+      limit = 10,
+      sortBy = "createdAt",
+      sortOrder = "desc",
+      maxPrice,
+    } = req.query;
+
+    const pageInt = parseInt(page);
+    const limitInt = parseInt(limit);
+    const skip = (pageInt - 1) * limitInt;
+
+    const pipeline = [
+      // STAGE 1: Initial Product Filtering
+      {
+        $match: {
+          ...(category && { category: new mongoose.Types.ObjectId(category) }),
+          ...(dressStyle && {
+            dressStyle: new mongoose.Types.ObjectId(dressStyle),
+          }),
+          ...(dressType && {
+            dressType: new mongoose.Types.ObjectId(dressType),
+          }),
+          ...(intendedFor && { intendedFor }),
+          ...(search && {
+            $or: [
+              { name: { $regex: search, $options: "i" } },
+              { description: { $regex: search, $options: "i" } },
+            ],
+          }),
+        },
+      },
+
+      // STAGE 2: Lookup and Populate Category
+      {
+        $lookup: {
+          from: "categories",
+          localField: "category",
+          foreignField: "_id",
+          as: "category",
+        },
+      },
+      { $unwind: "$category" },
+
+      // STAGE 3: Lookup and Populate DressStyle (if exists)
+      {
+        $lookup: {
+          from: "dressstyles",
+          localField: "dressStyle",
+          foreignField: "_id",
+          as: "dressStyle",
+        },
+      },
+      { $unwind: { path: "$dressStyle", preserveNullAndEmptyArrays: true } },
+
+      // STAGE 4: Lookup and Populate DressType (if exists)
+      {
+        $lookup: {
+          from: "dresstypes",
+          localField: "dressType",
+          foreignField: "_id",
+          as: "dressType",
+        },
+      },
+      { $unwind: { path: "$dressType", preserveNullAndEmptyArrays: true } },
+
+      // STAGE 5: Lookup Variants
+      {
+        $lookup: {
+          from: "productvariants",
+          localField: "variants",
+          foreignField: "_id",
+          as: "variants",
+        },
+      },
+
+      // STAGE 6: Unwind Variants for Filtering
+      { $unwind: "$variants" },
+
+      // STAGE 7: Populate Variant Color
+      {
+        $lookup: {
+          from: "colors",
+          localField: "variants.color.primary",
+          foreignField: "_id",
+          as: "variants.color.primary",
+        },
+      },
+      { $unwind: "$variants.color.primary" },
+
+      // STAGE 8: Populate Variant Sizes
+      {
+        $lookup: {
+          from: "sizes",
+          localField: "variants.size",
+          foreignField: "_id",
+          as: "variants.size",
+        },
+      },
+
+      // STAGE 9: Apply Variant Filters
+      {
+        $match: {
+          ...(color && {
+            "variants.color.primary._id": new mongoose.Types.ObjectId(color),
+          }),
+          ...(maxPrice && { "variants.price": { $lte: parseFloat(maxPrice) } }),
+          ...(size && {
+            "variants.size": {
+              $elemMatch: { _id: new mongoose.Types.ObjectId(size) },
+            },
+          }),
+        },
+      },
+
+      // STAGE 10: Group Back Products with Filtered Variants
+      {
+        $group: {
+          _id: "$_id",
+          name: { $first: "$name" },
+          description: { $first: "$description" },
+          intendedFor: { $first: "$intendedFor" },
+          createdAt: { $first: "$createdAt" },
+          updatedAt: { $first: "$updatedAt" },
+          category: { $first: "$category" },
+          dressStyle: { $first: "$dressStyle" },
+          dressType: { $first: "$dressType" },
+          variants: { $push: "$variants" },
+        },
+      },
+
+      // STAGE 11: Final Sorting
+      { $sort: { [sortBy]: sortOrder === "desc" ? -1 : 1 } },
+
+      // STAGE 12: Pagination
+      { $skip: skip },
+      { $limit: limitInt },
+    ];
+
+    const products = await ProductModel.aggregate(pipeline);
+
+    // Count total matching products
+    const countPipeline = [...pipeline];
+    countPipeline.splice(-3); // Remove sorting and pagination stages
+    const total =
+      (await ProductModel.aggregate([...countPipeline, { $count: "total" }]))[0]
+        ?.total || 0;
+
+    // Response with fully populated data
+    return {
+      products: products.map((product) => ({
+        ...product,
+        // Ensure variants.size is properly structured
+        variants: product.variants.map((variant) => ({
+          ...variant,
+          size: variant.size || [], // Ensure size is always an array
+        })),
+      })),
+      total,
+      page: pageInt,
+      pages: Math.ceil(total / limitInt),
+    };
+  }
+
   /**
    * Get Product By ID
    */

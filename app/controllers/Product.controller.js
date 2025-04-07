@@ -31,6 +31,17 @@ class ProductController {
       });
     }
   }
+  async getAllNew(req, res) {
+    try {
+      const result = await ProductService.getAllNew(req);
+      res.status(OK).json(result);
+    } catch (error) {
+      res.status(BAD_REQUEST).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
   /**
    * Get Product By ID
    */
