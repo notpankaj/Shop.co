@@ -4,6 +4,29 @@ const ProductVariant = require("../models/Variant.model");
 
 class ProductService {
   /**
+   * get Single Product
+   */
+  static async getProductById(data) {
+    const productId = data.params.id;
+
+    const product = await ProductModel.findOne({ _id: productId })
+      .populate({
+        path: "variants",
+        populate: [
+          { path: "color.primary", model: "Color" },
+          { path: "size", model: "Size" },
+        ],
+      })
+      .populate("category")
+      .populate("dressStyle");
+
+    return {
+      success: true,
+      message: "Product Get Successfuly",
+      data: product?._doc || product,
+    };
+  }
+  /**
    * Create a new Product
    */
   static async create(data) {
