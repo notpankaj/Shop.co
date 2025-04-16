@@ -523,7 +523,7 @@
 								},
 								{
 									"key": "dressStyle",
-									"value": null,
+									"value": "67b5692a980741ad81974e97",
 									"disabled": true
 								},
 								{
@@ -539,7 +539,7 @@
 								},
 								{
 									"key": "search",
-									"value": "a",
+									"value": "zw",
 									"description": "product name",
 									"disabled": true
 								},
@@ -564,6 +564,11 @@
 									"value": "asc",
 									"description": "asc , desc",
 									"disabled": true
+								},
+								{
+									"key": "price",
+									"value": "129",
+									"disabled": true
 								}
 							]
 						}
@@ -571,48 +576,79 @@
 					"response": []
 				},
 				{
-					"name": "get all Copy",
+					"name": "get all New",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/v1/product?color=60a1b2c3d4e5f8",
+							"raw": "{{url}}/api/v1/product/new",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"product"
+								"product",
+								"new"
 							],
 							"query": [
 								{
-									"key": "color",
-									"value": "60a1b2c3d4e5f8"
+									"key": "size",
+									"value": "67ac2c30e4940f87eb29815b",
+									"disabled": true
 								},
 								{
 									"key": "category",
-									"value": "60a1b2c3d4e5f9",
+									"value": "67abef6846555e45e6ca4f83",
 									"disabled": true
 								},
 								{
-									"key": "minPrice",
-									"value": "10",
-									"disabled": true
-								},
-								{
-									"key": "maxPrice",
-									"value": "100",
-									"disabled": true
-								},
-								{
-									"key": "size",
-									"value": "67ac2c30e4940f87eb29815b,67ac2c37e4940f87eb29815d",
+									"key": "dressStyle",
+									"value": "",
 									"disabled": true
 								},
 								{
 									"key": "intendedFor",
 									"value": "female",
+									"disabled": true
+								},
+								{
+									"key": "color",
+									"value": "67abfd40235412a734e3f39a",
+									"description": "primary color id",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "a4",
+									"description": "product name",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "ceeatedAt",
+									"description": "any field name",
+									"disabled": true
+								},
+								{
+									"key": "sortOrder",
+									"value": "desc",
+									"description": "asc , desc",
+									"disabled": true
+								},
+								{
+									"key": "maxPrice",
+									"value": "1000",
 									"disabled": true
 								}
 							]
@@ -854,14 +890,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/v1/admin/dress-type",
+							"raw": "{{url}}/api/v1/dress-type",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"admin",
 								"dress-type"
 							]
 						}
@@ -874,14 +909,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/v1/admin/dress-style",
+							"raw": "{{url}}/api/v1/dress-style",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"admin",
 								"dress-style"
 							]
 						}
@@ -947,6 +981,39 @@
 								"v1",
 								"brand",
 								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "create chekout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"products\":[\n  {\n    \"product\": {\n      \"_id\": \"67e78f44a68b36c93c6e1395\",\n      \"name\": \"ZW COLLECTION PRINTED MIDI DRESS\",\n      \"description\": \"Midi dress with a lapel collar and sleeves falling below the elbow. Self-tie belt in the same fabric. Front button fastening\",\n      \"intendedFor\": \"female\",\n      \"variants\": [\n        {\n          \"color\": {\n            \"primary\": {\n              \"_id\": \"67abfd4a235412a734e3f39c\",\n              \"name\": \"blue\",\n              \"code\": \"blue\",\n              \"createdAt\": \"2025-02-12T01:45:46.484Z\",\n              \"updatedAt\": \"2025-02-12T01:45:46.484Z\",\n              \"__v\": 0\n            },\n            \"secondary\": \"#0390fc\"\n          },\n          \"_id\": \"67e790a3a68b36c93c6e13a2\",\n          \"price\": 999,\n          \"size\": [\n            {\n              \"_id\": \"67ac2c30e4940f87eb29815b\",\n              \"name\": \"Regular\",\n              \"createdAt\": \"2025-02-12T05:05:52.153Z\",\n              \"updatedAt\": \"2025-02-12T05:05:52.153Z\",\n              \"__v\": 0\n            }\n          ],\n          \"photos\": [\n            \"http://res.cloudinary.com/dyibxim0s/image/upload/v1743229088/hn4dpgorlpvkpmpgbavm.jpg\",\n            \"http://res.cloudinary.com/dyibxim0s/image/upload/v1743229089/l1c14vpaoi2g50johq9q.jpg\",\n            \"http://res.cloudinary.com/dyibxim0s/image/upload/v1743229091/u3eb0omj12osrz3ie9jv.jpg\"\n          ],\n          \"createdAt\": \"2025-03-29T06:18:11.829Z\",\n          \"updatedAt\": \"2025-03-29T06:18:11.829Z\",\n          \"__v\": 0\n        },\n        {\n          \"color\": {\n            \"primary\": {\n              \"_id\": \"67abfd40235412a734e3f39a\",\n              \"name\": \"red\",\n              \"code\": \"red\",\n              \"createdAt\": \"2025-02-12T01:45:36.407Z\",\n              \"updatedAt\": \"2025-02-12T01:45:36.407Z\",\n              \"__v\": 0\n            },\n            \"secondary\": \"tomato\"\n          },\n          \"_id\": \"67e79d01ed4e40906cb7a0b4\",\n          \"price\": 888,\n          \"size\": [\n            {\n              \"_id\": \"67ac2c30e4940f87eb29815b\",\n              \"name\": \"Regular\",\n              \"createdAt\": \"2025-02-12T05:05:52.153Z\",\n              \"updatedAt\": \"2025-02-12T05:05:52.153Z\",\n              \"__v\": 0\n            },\n            {\n              \"_id\": \"67ac2c37e4940f87eb29815d\",\n              \"name\": \"XL\",\n              \"createdAt\": \"2025-02-12T05:05:59.472Z\",\n              \"updatedAt\": \"2025-02-12T05:05:59.472Z\",\n              \"__v\": 0\n            }\n          ],\n          \"photos\": [\n            \"http://res.cloudinary.com/dyibxim0s/image/upload/v1743232254/nwvyp1tqqr3fi5uie94p.jpg\",\n            \"http://res.cloudinary.com/dyibxim0s/image/upload/v1743232255/yckqn6wxcyrsvvnkeay2.jpg\",\n            \"http://res.cloudinary.com/dyibxim0s/image/upload/v1743232256/doqo9uptenzo8nbh31v6.jpg\"\n          ],\n          \"createdAt\": \"2025-03-29T07:10:57.303Z\",\n          \"updatedAt\": \"2025-03-29T07:10:57.303Z\",\n          \"__v\": 0\n        },\n        {\n          \"color\": {\n            \"primary\": {\n              \"_id\": \"67b86191c10d2a5b73ef7804\",\n              \"name\": \"green\",\n              \"code\": \"green\",\n              \"createdAt\": \"2025-02-21T11:20:49.193Z\",\n              \"updatedAt\": \"2025-02-21T11:20:49.193Z\",\n              \"__v\": 0\n            },\n            \"secondary\": \"#388a5c\"\n          },\n          \"_id\": \"67e79e9bed4e40906cb7a0cc\",\n          \"price\": 1111,\n          \"size\": [\n            {\n              \"_id\": \"67ac2c30e4940f87eb29815b\",\n              \"name\": \"Regular\",\n              \"createdAt\": \"2025-02-12T05:05:52.153Z\",\n              \"updatedAt\": \"2025-02-12T05:05:52.153Z\",\n              \"__v\": 0\n            },\n            {\n              \"_id\": \"67ac2c37e4940f87eb29815d\",\n              \"name\": \"XL\",\n              \"createdAt\": \"2025-02-12T05:05:59.472Z\",\n              \"updatedAt\": \"2025-02-12T05:05:59.472Z\",\n              \"__v\": 0\n            },\n            {\n              \"_id\": \"67e79db9ed4e40906cb7a0c2\",\n              \"name\": \"Small\",\n              \"createdAt\": \"2025-03-29T07:14:01.474Z\",\n              \"updatedAt\": \"2025-03-29T07:14:01.474Z\",\n              \"__v\": 0\n            },\n            {\n              \"_id\": \"67b8642157207d72a2c31f66\",\n              \"name\": \"XL2\",\n              \"createdAt\": \"2025-02-21T11:31:45.770Z\",\n              \"updatedAt\": \"2025-02-21T11:31:45.770Z\",\n              \"__v\": 0\n            }\n          ],\n          \"photos\": [\n            \"http://res.cloudinary.com/dyibxim0s/image/upload/v1743232662/qnzor6xwhoa11gmz6j2x.jpg\",\n            \"http://res.cloudinary.com/dyibxim0s/image/upload/v1743232663/aesuqctx94uy77bzoqfi.jpg\",\n            \"http://res.cloudinary.com/dyibxim0s/image/upload/v1743232666/tacrfmgqftrpp5i2mzyw.jpg\"\n          ],\n          \"createdAt\": \"2025-03-29T07:17:47.556Z\",\n          \"updatedAt\": \"2025-03-29T07:17:47.556Z\",\n          \"__v\": 0\n        }\n      ],\n      \"category\": {\n        \"_id\": \"67abef6846555e45e6ca4f83\",\n        \"name\": \"Hoodie\",\n        \"isActive\": true,\n        \"createdAt\": \"2025-02-12T00:46:32.607Z\",\n        \"updatedAt\": \"2025-02-12T00:46:32.607Z\",\n        \"__v\": 0\n      },\n      \"dressStyle\": {\n        \"_id\": \"67b5692a980741ad81974e97\",\n        \"name\": \"T-Shirt\",\n        \"isActive\": true,\n        \"createdAt\": \"2025-02-19T05:16:26.358Z\",\n        \"updatedAt\": \"2025-02-19T05:16:26.358Z\",\n        \"__v\": 0\n      },\n      \"dressType\": {\n        \"_id\": \"67b565ca11cc2a42799867ad\",\n        \"name\": \"Casual\",\n        \"isActive\": true,\n        \"createdAt\": \"2025-02-19T05:02:02.738Z\",\n        \"updatedAt\": \"2025-02-19T05:02:02.738Z\",\n        \"__v\": 0\n      },\n      \"user\": {\n        \"_id\": \"67c7c01550e765841a19b092\",\n        \"email\": \"zara@gmail.com\",\n        \"password\": \"$2b$10$qTZ6nMYSfQQ/M49E5Vf22OfY50Tx1GCV1Ms2w7gOJuus3GjdBFLN.\",\n        \"role\": \"brand\",\n        \"isDeleted\": false,\n        \"profile\": \"67c7c01550e765841a19b093\",\n        \"createdAt\": \"2025-03-05T03:08:05.452Z\",\n        \"updatedAt\": \"2025-03-05T03:26:12.822Z\",\n        \"__v\": 0\n      },\n      \"createdAt\": \"2025-03-29T06:12:20.852Z\",\n      \"updatedAt\": \"2025-03-29T07:17:47.573Z\",\n      \"__v\": 5\n    },\n    \"product_id\": \"67e78f44a68b36c93c6e1395\",\n    \"variant_id\": \"67e790a3a68b36c93c6e13a2\",\n    \"qty\": 4\n  },\n  {\n    \"product\": {\n      \"_id\": \"67c7d2b75fc7c27e22117b88\",\n      \"name\": \"a\",\n      \"description\": \"descriptionasda\",\n      \"intendedFor\": \"male\",\n      \"variants\": [\n        {\n          \"color\": {\n            \"primary\": {\n              \"_id\": \"67abfd40235412a734e3f39a\",\n              \"name\": \"red\",\n              \"code\": \"red\",\n              \"createdAt\": \"2025-02-12T01:45:36.407Z\",\n              \"updatedAt\": \"2025-02-12T01:45:36.407Z\",\n              \"__v\": 0\n            },\n            \"secondary\": \"tomato\"\n          },\n          \"_id\": \"67c7d45f0966c3b018458850\",\n          \"price\": 12312,\n          \"size\": [\n            {\n              \"_id\": \"67ac2c30e4940f87eb29815b\",\n              \"name\": \"Regular\",\n              \"createdAt\": \"2025-02-12T05:05:52.153Z\",\n              \"updatedAt\": \"2025-02-12T05:05:52.153Z\",\n              \"__v\": 0\n            }\n          ],\n          \"photos\": [\n            \"http://res.cloudinary.com/dyibxim0s/image/upload/v1741149278/iypvzwj39gikjen77kka.png\"\n          ],\n          \"createdAt\": \"2025-03-05T04:34:39.715Z\",\n          \"updatedAt\": \"2025-03-05T04:34:39.715Z\",\n          \"__v\": 0\n        }\n      ],\n      \"category\": {\n        \"_id\": \"67abef6846555e45e6ca4f83\",\n        \"name\": \"Hoodie\",\n        \"isActive\": true,\n        \"createdAt\": \"2025-02-12T00:46:32.607Z\",\n        \"updatedAt\": \"2025-02-12T00:46:32.607Z\",\n        \"__v\": 0\n      },\n      \"dressStyle\": {\n        \"_id\": \"67b5692a980741ad81974e97\",\n        \"name\": \"T-Shirt\",\n        \"isActive\": true,\n        \"createdAt\": \"2025-02-19T05:16:26.358Z\",\n        \"updatedAt\": \"2025-02-19T05:16:26.358Z\",\n        \"__v\": 0\n      },\n      \"dressType\": {\n        \"_id\": \"67b565ca11cc2a42799867ad\",\n        \"name\": \"Casual\",\n        \"isActive\": true,\n        \"createdAt\": \"2025-02-19T05:02:02.738Z\",\n        \"updatedAt\": \"2025-02-19T05:02:02.738Z\",\n        \"__v\": 0\n      },\n      \"user\": {\n        \"_id\": \"67c7c2203f2e9f4dbe901a0d\",\n        \"email\": \"zara2@gmail.com\",\n        \"password\": \"$2b$10$zcXpmD5LOpGv9mfo3p/8T.ZeJopcc/ypubWTq5FyFY7PnFFHTScte\",\n        \"role\": \"brand\",\n        \"isDeleted\": false,\n        \"roleModel\": \"BrandProfile\",\n        \"profile\": {\n          \"_id\": \"67c7c2203f2e9f4dbe901a0e\",\n          \"user\": \"67c7c2203f2e9f4dbe901a0d\",\n          \"brandName\": \"NEW NEW\",\n          \"createdAt\": \"2025-03-05T03:16:48.031Z\",\n          \"updatedAt\": \"2025-03-05T05:09:54.680Z\",\n          \"__v\": 0,\n          \"icon\": \"http://res.cloudinary.com/dyibxim0s/image/upload/v1741151390/cca0mu8uqlknldiskwpm.jpg\",\n          \"poster\": \"http://res.cloudinary.com/dyibxim0s/image/upload/v1741151393/tqhox1qnwszy51ecedok.png\",\n          \"phone\": \"1234567891\"\n        },\n        \"createdAt\": \"2025-03-05T03:16:48.028Z\",\n        \"updatedAt\": \"2025-03-05T03:47:38.022Z\",\n        \"__v\": 0\n      },\n      \"createdAt\": \"2025-03-05T04:27:35.577Z\",\n      \"updatedAt\": \"2025-03-05T04:34:39.722Z\",\n      \"__v\": 1\n    },\n    \"product_id\": \"67c7d2b75fc7c27e22117b88\",\n    \"variant_id\": \"67c7d45f0966c3b018458850\",\n    \"qty\": 3\n  }\n],\n\n\"success_url\":\"\",\n\"cancel_url\":\"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/stripe-checkout",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"stripe-checkout"
 							]
 						}
 					},
