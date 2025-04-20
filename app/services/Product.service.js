@@ -172,17 +172,17 @@ class ProductService {
     const filteredProducts =
       size || color
         ? products.map((p) => ({
-            ...p.toObject(),
-            variants: p.variants.filter((v) => {
-              const sizeMatch = size
-                ? v.size.some((s) => s._id.equals(size))
-                : true;
-              const colorMatch = color
-                ? v.color.primary._id.equals(color)
-                : true;
-              return sizeMatch && colorMatch;
-            }),
-          }))
+          ...p.toObject(),
+          variants: p.variants.filter((v) => {
+            const sizeMatch = size
+              ? v.size.some((s) => s._id.equals(size))
+              : true;
+            const colorMatch = color
+              ? v.color.primary._id.equals(color)
+              : true;
+            return sizeMatch && colorMatch;
+          }),
+        }))
         : products;
 
     return {
@@ -256,7 +256,7 @@ class ProductService {
         color
       );
     }
-    if (maxPrice) {
+    if (maxPrice > 4) {
       variantMatch["variants.price"] = { $lte: parseFloat(maxPrice) };
     }
 
