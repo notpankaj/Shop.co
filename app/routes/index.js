@@ -9,6 +9,7 @@ const VarientRoutes = require("./Varient.routes");
 const SizeRoutes = require("./Size.routes");
 const AdminRoutes = require("./Admin.routes");
 const BrandRoutes = require("./Brand.routes");
+const AddressRoutes = require("./Address.routes");
 const AdminMiddleware = require("../middleware/Admin.middleware");
 
 const routes = (app) => {
@@ -26,6 +27,7 @@ const routes = (app) => {
   app.use("/api/v1/color", ColorRoutes);
   app.use("/api/v1/size", SizeRoutes);
   app.use("/api/v1/brand", BrandRoutes);
+  app.use("/api/v1/address", AddressRoutes);
 
   return app;
 };
