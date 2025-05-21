@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\":\"zara@gmail.com\",\n    \"password\":\"Admin@123\"\n}",
+							"raw": "{\n    \"email\":\"admin@gmail.com\",\n    \"password\":\"admin@123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -24,9 +24,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/v1/auth/login",
+							"raw": "{{live}}/api/v1/auth/login",
 							"host": [
-								"{{url}}"
+								"{{live}}"
 							],
 							"path": [
 								"api",
@@ -45,7 +45,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\":\"ZA\",// only for customer\n    \"lastName\":\"RA\", //only for customer\n    \"brandName\":\"ZARA\", //only for brand\n    \"email\":\"zara@gmail.com\",\n    \"password\":\"admin@123\",\n    \"role\":\"brand\" // customer  brand \n}",
+							"raw": "{\n    \"firstName\":\"Root\",// only for customer\n    \"lastName\":\"User\", //only for customer\n    \"brandName\":\"ZARA\", //only for brand\n    \"email\":\"admin@gmail.com\",\n    \"password\":\"admin@123\",\n    \"role\":\"customer\" // customer  brand \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -53,9 +53,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/v1/auth/register",
+							"raw": "{{live}}/api/v1/auth/register",
 							"host": [
-								"{{url}}"
+								"{{live}}"
 							],
 							"path": [
 								"api",
@@ -434,7 +434,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\":\"red\",\n    \"code\":\"orangered\"\n}",
+							"raw": "{\n    \"name\":\"White\",\n    \"code\":\"#ffffff\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1022,6 +1022,157 @@
 			]
 		},
 		{
+			"name": "Addresses",
+			"item": [
+				{
+					"name": "get all Address",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2E2ZWZjNzZhNDM0YWZmOGU3MTc5ZWQiLCJpYXQiOjE3NDc2NDA4MDQsImV4cCI6MTc0NzY0NDQwNH0.ddxwDnhMiT095Thm3XJ7sCaPU5rmbOD8DMeH9xxvSW8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/v1/address",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Address",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2E2ZWZjNzZhNDM0YWZmOGU3MTc5ZWQiLCJpYXQiOjE3NDc4Mzg4ODcsImV4cCI6MTc0Nzg0MjQ4N30.Ycr4GRozLukxMdL9Ef2gyEchXWqvdN-nCL6XMcsqVMw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/v1/address/682de6192788e8599d64b07e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"address",
+								"682de6192788e8599d64b07e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete address",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2E2ZWZjNzZhNDM0YWZmOGU3MTc5ZWQiLCJpYXQiOjE3NDc2NDA4MDQsImV4cCI6MTc0NzY0NDQwNH0.ddxwDnhMiT095Thm3XJ7sCaPU5rmbOD8DMeH9xxvSW8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/v1/address/682ae7dccb78853caae0f26e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"address",
+								"682ae7dccb78853caae0f26e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create Address",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2E2ZWZjNzZhNDM0YWZmOGU3MTc5ZWQiLCJpYXQiOjE3NDc2NDA4MDQsImV4cCI6MTc0NzY0NDQwNH0.ddxwDnhMiT095Thm3XJ7sCaPU5rmbOD8DMeH9xxvSW8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"address\":\"asdosnasdasd\",\n    \"phone\":1234567890,\n    \"name\":\"Pankaj\",\n    \"city\":\"mohali\",\n    \"state\":\"punjab\",\n    \"pincode\":123123,\n    \"locality\":\"SAS\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/address",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit Address",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2E2ZWZjNzZhNDM0YWZmOGU3MTc5ZWQiLCJpYXQiOjE3NDc2NDA4MDQsImV4cCI6MTc0NzY0NDQwNH0.ddxwDnhMiT095Thm3XJ7sCaPU5rmbOD8DMeH9xxvSW8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"address\":\"asd\",\n    \"phone\": 9887654321,\n    \"name\":\"shubham\",\n    \"city\":\"krnal\",\n    \"state\":\"haryana\",\n    \"pincode\":654456,\n    \"locality\":\"asd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/address/682ae871a6bd742f2da41b5e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"address",
+								"682ae871a6bd742f2da41b5e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "welcome",
 			"request": {
 				"method": "GET",
@@ -1049,7 +1200,8 @@
 					{
 						"key": "Authorization",
 						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2E2ZWZjNzZhNDM0YWZmOGU3MTc5ZWQiLCJpYXQiOjE3NDExNDc3ODQsImV4cCI6MTc0MTE1MTM4NH0.IjoctWPx5rAg75y0DMsgkvRKndmdhyZDBacO9l6WehE",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"body": {
@@ -1110,6 +1262,11 @@
 			"key": "url",
 			"value": "",
 			"type": "default"
+		},
+		{
+			"key": "live",
+			"value": "https://shop-co-8jvk.onrender.com/",
+			"type": "string"
 		}
 	]
 }

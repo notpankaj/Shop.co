@@ -8,5 +8,6 @@ route.post("/", AuthMiddleware, AddressController.addAddress);
 route.put("/:addressId", AuthMiddleware, AddressController.editAddress);
 route.delete("/:addressId", AuthMiddleware, AddressController.deleteAddress);
 route.get("/", AuthMiddleware, AddressController.getAddresses);
+route.get("/:addressId", AuthMiddleware, AddressController.getAddress);
 
 module.exports = route;

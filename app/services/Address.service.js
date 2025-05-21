@@ -115,6 +115,16 @@ class AddressService {
             data: addresses,
         };
     }
+    static async getAddress({ addressId }) {
+        console.log(addressId)
+        const addresses = await Address.findById(addressId);
+
+        return {
+            success: true,
+            message: "Address fetched successfully",
+            data: addresses,
+        };
+    }
 }
 
 module.exports = AddressService;

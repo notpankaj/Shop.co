@@ -79,6 +79,19 @@ class AddressController {
             });
         }
     }
+    async getAddress(req, res) {
+        try {
+            const data = { user: req.user, addressId: req.params.addressId, };
+
+            const result = await AddressService.getAddress(data);
+            res.status(OK).json(result);
+        } catch (error) {
+            res.status(BAD_REQUEST).json({
+                success: false,
+                message: error.message,
+            });
+        }
+    }
 }
 
 module.exports = new AddressController();
